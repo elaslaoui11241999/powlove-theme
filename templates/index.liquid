@@ -60,33 +60,36 @@
       <h2>3 imprescindibles para tu <span class="accent">peludo</span></h2>
     </div>
     <div class="pgrid">
-      <a href="#scooper" class="pcard reveal">
+      <div class="pcard reveal" onclick="buyNow('portable-lightweight-dog-pooper-scooper-with-built-in-poop-bag-dispenser-eight-claw-shovel-for-pet-toilet-picker-pet-products',this)" style="cursor:pointer">
         <div class="pcard__media"><span class="pcard__flag pcard__flag--green">−33%</span><img src="{{ 'pl-scooper-card.png' | asset_url }}" alt="Recogedor de caca portátil"></div>
         <div class="pcard__body">
           <div class="pcard__rate"><span class="stars">★★★★★</span> 214 reseñas</div>
           <div class="pcard__title">Recogedor de Caca Portátil con Linterna LED</div>
           <div class="swatches"><span class="swatch" style="background:#3FB4B1"></span><span class="swatch" style="background:#E8702A"></span></div>
           <div class="pcard__price"><b>€19,95</b><del>€29,95</del><span class="off">Ahorra €10</span></div>
+          <div class="pcard__cta"><button class="btn btn--primary btn--block" type="button">Comprar ahora 🐾</button></div>
         </div>
-      </a>
-      <a href="#correa" class="pcard reveal">
+      </div>
+      <div class="pcard reveal" onclick="buyNow('portable-dog-pooper-scooper-outdoor-pet-waste-pick-up-cleaner-built-in-garbage-bag-handheld-pet-poop-grabber-no-touch-design',this)" style="cursor:pointer">
         <div class="pcard__media"><span class="pcard__flag">🔥 Más vendido</span><img src="{{ 'pl-leash-top.png' | asset_url }}" alt="Correa retráctil"></div>
         <div class="pcard__body">
           <div class="pcard__rate"><span class="stars">★★★★★</span> 318 reseñas</div>
           <div class="pcard__title">Correa Retráctil 3m / 5m · 8 colores</div>
           <div class="swatches"><span class="swatch" style="background:#D0342C"></span><span class="swatch" style="background:#2A6FB0"></span><span class="swatch" style="background:#3FB4B1"></span><span class="swatch" style="background:#E58CA8"></span><span class="swatch" style="background:#7BB661"></span><span class="swatch" style="background:#2A1B12"></span></div>
           <div class="pcard__price"><b>€16,95</b><del>€24,95</del><span class="off">Ahorra €8</span></div>
+          <div class="pcard__cta"><button class="btn btn--primary btn--block" type="button">Comprar ahora 🐾</button></div>
         </div>
-      </a>
-      <a href="#cinturon" class="pcard reveal">
+      </div>
+      <div class="pcard reveal" onclick="buyNow('2-in-1-solid-dog-harness-leash-pet-car-seat-belt-heavy-duty-elastic-safety-belt-adjustable-for-kitten-dogs-collar-pet-accessorie',this)" style="cursor:pointer">
         <div class="pcard__media"><span class="pcard__flag pcard__flag--green">−32%</span><img src="{{ 'pl-seatbelt-hero.png' | asset_url }}" alt="Cinturón de seguridad para perro"></div>
         <div class="pcard__body">
           <div class="pcard__rate"><span class="stars">★★★★★</span> 176 reseñas</div>
           <div class="pcard__title">Cinturón de Seguridad Doble para Coche</div>
           <div class="swatches"><span class="swatch" style="background:#2A1B12"></span><span class="swatch" style="background:#E58CA8"></span><span class="swatch" style="background:#E8702A"></span><span class="swatch" style="background:#3FB4B1"></span><span class="swatch" style="background:#8E2434"></span></div>
           <div class="pcard__price"><b>€18,95</b><del>€27,95</del><span class="off">Ahorra €9</span></div>
+          <div class="pcard__cta"><button class="btn btn--primary btn--block" type="button">Comprar ahora 🐾</button></div>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 </section>
@@ -217,6 +220,26 @@
 <div class="toast" id="pl-toast">🛒 <span>Añadido</span></div>
 
 <script>
+function buyNow(handle, el){
+  var btn = el.querySelector('button');
+  if(btn){ btn.textContent = 'Procesando...'; btn.disabled = true; }
+  fetch('/products/' + handle + '.js')
+    .then(function(r){ return r.json(); })
+    .then(function(p){
+      var vid = p.variants[0].id;
+      return fetch('/cart/add.js',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({id:vid,quantity:1})
+      });
+    })
+    .then(function(){ window.location.href = '/checkout'; })
+    .catch(function(){
+      if(btn){ btn.textContent = 'Comprar ahora 🐾'; btn.disabled = false; }
+      window.location.href = '/collections/all';
+    });
+}
+
 function toggleSoporte(e){
   e.stopPropagation();
   document.getElementById('soporte-popup').classList.toggle('show');
