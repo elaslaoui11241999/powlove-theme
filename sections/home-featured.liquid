@@ -1,0 +1,114 @@
+<section class="section" id="productos">
+  <div class="page-width">
+    <div class="plf__head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.title }}</h2>
+    </div>
+    <div class="plf__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign has_prod = false
+          if block.settings.product != blank
+            assign prod = all_products[block.settings.product]
+            if prod != empty and prod.title != blank
+              assign has_prod = true
+            endif
+          endif
+        -%}
+        <a href="{% if has_prod %}{{ prod.url }}{% else %}{{ block.settings.link | default: '#' }}{% endif %}" class="plf__card" {{ block.shopify_attributes }}>
+          <div class="plf__media">
+            {%- if block.settings.flag != blank -%}<span class="plf__flag {% if block.settings.flag_green %}plf__flag--green{% endif %}">{{ block.settings.flag }}</span>{%- endif -%}
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title }}" loading="lazy">
+            {%- elsif has_prod and prod.featured_image -%}
+              <img src="{{ prod.featured_image | image_url: width: 600 }}" alt="{{ prod.title }}" loading="lazy">
+            {%- else -%}
+              <img src="{{ block.settings.fallback | default: 'pl-scooper-card.png' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+            {%- endif -%}
+          </div>
+          <div class="plf__body">
+            <div class="plf__rate">{% render 'stars', rating: 5 %} {{ block.settings.reviews }}</div>
+            <div class="plf__title">{% if has_prod %}{{ prod.title }}{% else %}{{ block.settings.title }}{% endif %}</div>
+            {%- if block.settings.swatches != blank -%}
+              <div class="plf__sw">
+                {%- assign cols = block.settings.swatches | split: ',' -%}
+                {%- for c in cols -%}<span class="plf__dot" style="background:{{ c | strip }}"></span>{%- endfor -%}
+              </div>
+            {%- endif -%}
+            <div class="plf__price">
+              {%- if has_prod -%}
+                <b>{{ prod.price | money }}</b>{% if prod.compare_at_price > prod.price %}<del>{{ prod.compare_at_price | money }}</del>{% endif %}
+              {%- else -%}
+                <b>{{ block.settings.price }}</b>{% if block.settings.compare != blank %}<del>{{ block.settings.compare }}</del>{% endif %}
+              {%- endif -%}
+              {%- if block.settings.save != blank -%}<span class="plf__off">{{ block.settings.save }}</span>{%- endif -%}
+            </div>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.plf__head{text-align:center;max-width:60ch;margin:0 auto 52px}
+.plf__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+@media(max-width:860px){.plf__grid{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
+.plf__card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.plf__card:hover{transform:translateY(-6px);box-shadow:0 28px 50px -28px rgba(42,27,18,.5)}
+.plf__media{position:relative;aspect-ratio:1;background:var(--color-surface-2);overflow:hidden}
+.plf__media img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.plf__card:hover .plf__media img{transform:scale(1.05)}
+.plf__flag{position:absolute;top:14px;left:14px;background:var(--color-accent);color:#fff;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.76rem;padding:6px 13px;border-radius:999px}
+.plf__flag--green{background:#3E8E5A}
+.plf__body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:9px;flex:1}
+.plf__rate{display:flex;align-items:center;gap:8px;color:var(--color-ink-soft);font-weight:700;font-size:.85rem}
+.plf__title{font-family:'Domine',serif;font-weight:700;font-size:1.18rem;line-height:1.25}
+.plf__sw{display:flex;gap:7px;align-items:center}
+.plf__dot{width:22px;height:22px;border-radius:7px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7),0 0 0 1px rgba(42,27,18,.15)}
+.plf__price{display:flex;align-items:baseline;gap:10px;margin-top:auto}
+.plf__price b{font-family:'Domine',serif;font-size:1.5rem}
+.plf__price del{color:var(--color-ink-soft);font-size:1rem}
+.plf__off{background:#3E8E5A;color:#fff;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.72rem;padding:3px 9px;border-radius:999px}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Productos destacados",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "⭐ Los favoritos" },
+    { "type": "text", "id": "title", "label": "Título", "default": "3 imprescindibles para tu peludo" }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Producto",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Producto (recomendado)", "info": "Si lo eliges, usa título, precio e imagen reales de Shopify." },
+        { "type": "url", "id": "link", "label": "Enlace (si no eliges producto)" },
+        { "type": "text", "id": "title", "label": "Título (si no hay producto)" },
+        { "type": "image_picker", "id": "image", "label": "Imagen (opcional)" },
+        { "type": "text", "id": "fallback", "label": "Imagen por defecto del tema", "info": "pl-scooper-card.png, pl-leash-top.png o pl-seatbelt-hero.png" },
+        { "type": "text", "id": "reviews", "label": "Texto reseñas", "default": "214 reseñas" },
+        { "type": "text", "id": "swatches", "label": "Colores (hex, separados por coma)", "default": "#3FB4B1,#E8702A" },
+        { "type": "text", "id": "price", "label": "Precio (si no hay producto)", "default": "€19,95" },
+        { "type": "text", "id": "compare", "label": "Precio tachado", "default": "€29,95" },
+        { "type": "text", "id": "save", "label": "Etiqueta descuento", "default": "Ahorra €10" },
+        { "type": "text", "id": "flag", "label": "Badge", "default": "−33%" },
+        { "type": "checkbox", "id": "flag_green", "label": "Badge verde", "default": true }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Productos destacados",
+      "blocks": [
+        { "type": "product", "settings": { "title": "Recogedor de Caca Portátil con Linterna LED", "fallback": "pl-scooper-card.png", "reviews": "214 reseñas", "swatches": "#3FB4B1,#E8702A", "price": "€19,95", "compare": "€29,95", "save": "Ahorra €10", "flag": "−33%", "flag_green": true } },
+        { "type": "product", "settings": { "title": "Correa Retráctil 3m / 5m · 8 colores", "fallback": "pl-leash-top.png", "reviews": "318 reseñas", "swatches": "#D0342C,#2A6FB0,#3FB4B1,#E58CA8,#7BB661,#2A1B12", "price": "€16,95", "compare": "€24,95", "save": "Ahorra €8", "flag": "🔥 Más vendido", "flag_green": false } },
+        { "type": "product", "settings": { "title": "Cinturón de Seguridad Doble para Coche", "fallback": "pl-seatbelt-hero.png", "reviews": "176 reseñas", "swatches": "#2A1B12,#E58CA8,#E8702A,#3FB4B1,#8E2434", "price": "€18,95", "compare": "€27,95", "save": "Ahorra €9", "flag": "−32%", "flag_green": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

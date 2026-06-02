@@ -1,0 +1,17 @@
+<section class="section">
+  <div class="page-width">
+    <div class="sec-head"><h1>Categorías</h1></div>
+    <div class="cats">
+      {%- for collection in collections -%}
+        <a href="{{ collection.url }}" class="cat-chip">
+          {{ collection.title }}
+          <small>{{ collection.products_count }} productos</small>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Lista de colecciones", "settings": [] }
+{% endschema %}

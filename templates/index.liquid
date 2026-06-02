@@ -1,0 +1,221 @@
+{{ 'landing.css' | asset_url | stylesheet_tag }}
+
+{%- assign coll = routes.all_products_collection_url -%}
+
+<!-- hero -->
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__content">
+      <span class="eyebrow">🐾 La tienda que tus mascotas merecen</span>
+      <h1>Todo el amor para tu <span class="accent">mascota</span>, en un solo sitio</h1>
+      <p class="hero__lead">Los accesorios más prácticos para perros y gatos: paseos sin estrés, viajes seguros y limpieza al instante. Calidad premium, precio justo y envío a toda España.</p>
+      <div class="hero__cta">
+        <a href="#productos" class="btn btn--primary btn--lg">Ver productos 🐾</a>
+        <a href="#bundle" class="btn btn--ghost btn--lg">Pack ahorro −30%</a>
+      </div>
+      <div class="hero__proof">
+        <div class="avatars">
+          <span style="background:#E8702A">SM</span><span style="background:#3E8E5A">CR</span><span style="background:#2A6FB0">AG</span><span style="background:#E58CA8">JP</span>
+        </div>
+        <div><span class="stars">★★★★★</span><div style="font-weight:800">4.9/5 · +5.000 mascotas felices</div></div>
+      </div>
+    </div>
+    <div class="hero__stage">
+      <div class="hero__card hero__card--main"><img src="{{ 'pl-seatbelt-hero.png' | asset_url }}" alt="Perros con cinturón de seguridad"></div>
+      <div class="hero__card hero__card--tr"><img src="{{ 'pl-leash-top.png' | asset_url }}" alt="Correas retráctiles de colores"></div>
+      <div class="hero__card hero__card--br"><img src="{{ 'pl-scooper-card.png' | asset_url }}" alt="Recogedor portátil"></div>
+      <div class="hero__bubble hero__bubble--1">⭐ 4.9 / 5</div>
+      <div class="hero__bubble hero__bubble--2">🚀 Envío rápido</div>
+    </div>
+  </div>
+</section>
+
+<!-- trust -->
+<div class="trust">
+  <div class="trust__in">
+    <div class="trust__it"><span>🚚</span> Envío a toda España</div>
+    <div class="trust__it"><span>🔒</span> Pago 100% seguro</div>
+    <div class="trust__it"><span>↩️</span> 30 días de devolución</div>
+    <div class="trust__it"><span>💬</span> Soporte que responde</div>
+  </div>
+</div>
+
+<!-- productos -->
+<section class="section" id="productos">
+  <div class="wrap">
+    <div class="shead reveal">
+      <span class="eyebrow">⭐ Los favoritos</span>
+      <h2>3 imprescindibles para tu <span class="accent">peludo</span></h2>
+    </div>
+    <div class="pgrid">
+      <a href="#scooper" class="pcard reveal">
+        <div class="pcard__media"><span class="pcard__flag pcard__flag--green">−33%</span><img src="{{ 'pl-scooper-card.png' | asset_url }}" alt="Recogedor de caca portátil"></div>
+        <div class="pcard__body">
+          <div class="pcard__rate"><span class="stars">★★★★★</span> 214 reseñas</div>
+          <div class="pcard__title">Recogedor de Caca Portátil con Linterna LED</div>
+          <div class="swatches"><span class="swatch" style="background:#3FB4B1"></span><span class="swatch" style="background:#E8702A"></span></div>
+          <div class="pcard__price"><b>€19,95</b><del>€29,95</del><span class="off">Ahorra €10</span></div>
+        </div>
+      </a>
+      <a href="#correa" class="pcard reveal">
+        <div class="pcard__media"><span class="pcard__flag">🔥 Más vendido</span><img src="{{ 'pl-leash-top.png' | asset_url }}" alt="Correa retráctil"></div>
+        <div class="pcard__body">
+          <div class="pcard__rate"><span class="stars">★★★★★</span> 318 reseñas</div>
+          <div class="pcard__title">Correa Retráctil 3m / 5m · 8 colores</div>
+          <div class="swatches"><span class="swatch" style="background:#D0342C"></span><span class="swatch" style="background:#2A6FB0"></span><span class="swatch" style="background:#3FB4B1"></span><span class="swatch" style="background:#E58CA8"></span><span class="swatch" style="background:#7BB661"></span><span class="swatch" style="background:#2A1B12"></span></div>
+          <div class="pcard__price"><b>€16,95</b><del>€24,95</del><span class="off">Ahorra €8</span></div>
+        </div>
+      </a>
+      <a href="#cinturon" class="pcard reveal">
+        <div class="pcard__media"><span class="pcard__flag pcard__flag--green">−32%</span><img src="{{ 'pl-seatbelt-hero.png' | asset_url }}" alt="Cinturón de seguridad para perro"></div>
+        <div class="pcard__body">
+          <div class="pcard__rate"><span class="stars">★★★★★</span> 176 reseñas</div>
+          <div class="pcard__title">Cinturón de Seguridad Doble para Coche</div>
+          <div class="swatches"><span class="swatch" style="background:#2A1B12"></span><span class="swatch" style="background:#E58CA8"></span><span class="swatch" style="background:#E8702A"></span><span class="swatch" style="background:#3FB4B1"></span><span class="swatch" style="background:#8E2434"></span></div>
+          <div class="pcard__price"><b>€18,95</b><del>€27,95</del><span class="off">Ahorra €9</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- spotlight scooper -->
+<section class="section" id="scooper" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="spot">
+      <div class="spot__media reveal"><span class="spot__badge">⚡ Oferta −33%</span><img src="{{ 'pl-scooper-hero.png' | asset_url }}" alt="Recogedor de caca portátil con linterna"></div>
+      <div class="reveal">
+        <span class="eyebrow">🪥 Paseos limpios</span>
+        <h2>Recoge sin agacharte, <span class="accent">sin tocar nada</span></h2>
+        <p style="color:var(--soft)">El recogedor portátil todo en uno: mecanismo de pinza, dispensador de bolsas integrado y linterna LED para los paseos nocturnos. Ligero, con mosquetón y correa de mano.</p>
+        <ul class="feat">
+          <li><span class="fi">🦴</span> Pinza de un solo gesto: recoge sin mancharte las manos</li>
+          <li><span class="fi">💡</span> Linterna LED integrada para pasear de noche</li>
+          <li><span class="fi">♻️</span> Dispensador de bolsas + 1 rollo de regalo</li>
+          <li><span class="fi">🎒</span> Mosquetón y correa: cuélgalo donde quieras</li>
+        </ul>
+        <div class="colorrow"><span class="colorrow__lbl">Color</span><button class="copt sel" style="background:#3FB4B1" data-c></button><button class="copt" style="background:#E8702A" data-c></button></div>
+        <div class="spot__buy"><div class="spot__price"><del>€29,95</del>€19,95</div><a href="{{ coll }}" class="btn btn--primary btn--lg">Comprar ahora 🐾</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- spotlight correa -->
+<section class="section" id="correa">
+  <div class="wrap">
+    <div class="spot spot--rev">
+      <div class="spot__media reveal"><span class="spot__badge">🔥 Más vendido</span><img src="{{ 'pl-leash-colors.png' | asset_url }}" alt="Correa retráctil en 8 colores"></div>
+      <div class="reveal">
+        <span class="eyebrow">🦮 Paseos sin tirones</span>
+        <h2>La correa retráctil que <span class="accent">se adapta a ti</span></h2>
+        <p style="color:var(--soft)">Cinta resistente con freno y bloqueo de un botón. Mango ergonómico antideslizante y carcasa ligera. Disponible en 8 colores y dos tamaños.</p>
+        <ul class="feat">
+          <li><span class="fi">🖐️</span> Freno y bloqueo con un solo pulgar</li>
+          <li><span class="fi">🪢</span> Cinta reflectante resistente hasta 25 kg</li>
+          <li><span class="fi">🎨</span> 8 colores para combinar con tu mascota</li>
+          <li><span class="fi">📏</span> Elige 3 m o 5 m según tu paseo</li>
+        </ul>
+        <div class="colorrow"><span class="colorrow__lbl">Color</span><button class="copt sel" style="background:#D0342C" data-c></button><button class="copt" style="background:#2A6FB0" data-c></button><button class="copt" style="background:#3FB4B1" data-c></button><button class="copt" style="background:#E58CA8" data-c></button><button class="copt" style="background:#7BB661" data-c></button><button class="copt" style="background:#2A1B12" data-c></button></div>
+        <div class="colorrow"><span class="colorrow__lbl">Tamaño</span><button class="copt sel" style="width:auto;padding:6px 16px;font-family:'Fredoka',sans-serif;font-weight:600;background:var(--surface)" data-s>3 m</button><button class="copt" style="width:auto;padding:6px 16px;font-family:'Fredoka',sans-serif;font-weight:600;background:var(--surface)" data-s>5 m</button></div>
+        <div class="spot__buy"><div class="spot__price"><del>€24,95</del>€16,95</div><a href="{{ coll }}" class="btn btn--primary btn--lg">Comprar ahora 🐾</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- spotlight cinturon -->
+<section class="section" id="cinturon" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="spot">
+      <div class="spot__media reveal"><span class="spot__badge">🛡️ Viaje seguro</span><img src="{{ 'pl-seatbelt-hero.png' | asset_url }}" alt="Dos perros con cinturón de seguridad"></div>
+      <div class="reveal">
+        <span class="eyebrow">🚗 Seguridad en el coche</span>
+        <h2>Que tu perro viaje <span class="accent">seguro, siempre</span></h2>
+        <p style="color:var(--soft)">Doble cinturón con amortiguador elástico que absorbe los tirones, hebilla de liberación rápida y rotación 360°. Para uno o dos perros. También sirve de correa de paseo.</p>
+        <ul class="feat">
+          <li><span class="fi">🔗</span> Amortiguador elástico que absorbe frenazos</li>
+          <li><span class="fi">🔄</span> Rotación 360°: sin enredos</li>
+          <li><span class="fi">⚡</span> Hebilla de liberación rápida y bloqueo</li>
+          <li><span class="fi">🐕‍🦺</span> 2 en 1: cinturón de coche + correa</li>
+        </ul>
+        <div class="colorrow"><span class="colorrow__lbl">Color</span><button class="copt sel" style="background:#2A1B12" data-c></button><button class="copt" style="background:#E58CA8" data-c></button><button class="copt" style="background:#E8702A" data-c></button><button class="copt" style="background:#3FB4B1" data-c></button><button class="copt" style="background:#8E2434" data-c></button></div>
+        <img src="{{ 'pl-seatbelt-colors.png' | asset_url }}" alt="Colores disponibles" style="border-radius:14px;margin-top:18px;border:1px solid var(--border)">
+        <div class="spot__buy"><div class="spot__price"><del>€27,95</del>€18,95</div><a href="{{ coll }}" class="btn btn--primary btn--lg">Comprar ahora 🐾</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- bundle -->
+<section class="section" id="bundle">
+  <div class="wrap">
+    <div class="bundle reveal">
+      <div>
+        <span class="eyebrow" style="color:var(--accent)">🎁 Pack completo</span>
+        <h2>El Pack PawLove: los 3, con −30%</h2>
+        <p style="color:rgba(251,239,226,.78);max-width:46ch">Recogedor portátil + correa retráctil + cinturón de seguridad. Todo lo que necesitas para pasear y viajar con tu mascota, a un precio irresistible.</p>
+        <a href="{{ coll }}" class="btn btn--primary btn--lg" style="margin-top:22px">Quiero el pack 🐾</a>
+      </div>
+      <div class="bundle__price">
+        <div class="bundle__was">€82,85</div>
+        <div class="bundle__now">€57,95</div>
+        <span class="bundle__save">Ahorras €24,90</span>
+        <div style="margin-top:14px;color:rgba(251,239,226,.7);font-size:.9rem">🚚 Envío gratis incluido</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- opiniones -->
+<section class="section" id="opiniones" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="shead reveal">
+      <span class="eyebrow">💬 Clientes reales</span>
+      <h2>Más de <span class="accent">5.000</span> mascotas felices</h2>
+      <div style="margin-top:8px"><span class="stars">★★★★★</span> <strong>Valoración media 4.9/5</strong></div>
+    </div>
+    <div class="rgrid">
+      <div class="rev reveal"><span class="stars">★★★★★</span><p class="rev__q">“El recogedor con linterna es genial para los paseos de noche. Mis manos siempre limpias.”</p><div class="rev__p"><div class="rev__a" style="background:#E8702A">SM</div><div><div class="rev__n">Sara M.</div><div class="rev__m">Madrid · Dueña de Chihuahua</div><div class="rev__v">✓ Compra verificada</div></div></div></div>
+      <div class="rev reveal"><span class="stars">★★★★★</span><p class="rev__q">“La correa va suave y el freno responde al instante. Pillé la turquesa y es preciosa.”</p><div class="rev__p"><div class="rev__a" style="background:#3FB4B1">CR</div><div><div class="rev__n">Carlos R.</div><div class="rev__m">Barcelona · Dueño de Beagle</div><div class="rev__v">✓ Compra verificada</div></div></div></div>
+      <div class="rev reveal"><span class="stars">★★★★★</span><p class="rev__q">“Llevo a mis dos perros en el coche con total tranquilidad. El amortiguador se nota.”</p><div class="rev__p"><div class="rev__a" style="background:#8E2434">AG</div><div><div class="rev__n">Ana G.</div><div class="rev__m">Valencia · Dueña de 2 Bulldogs</div><div class="rev__v">✓ Compra verificada</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- newsletter -->
+<section class="section">
+  <div class="wrap">
+    <div class="news reveal">
+      <span class="eyebrow">📧 Newsletter</span>
+      <h2>Únete a la familia <span class="accent">PawLove</span> 🐾</h2>
+      <p style="color:var(--soft);max-width:46ch;margin:0 auto">Recibe ofertas exclusivas y consejos para tu mascota. Y un <b>10% en tu primer pedido</b>.</p>
+      {% form 'customer' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="news__form">
+          <input type="email" name="contact[email]" placeholder="Tu correo electrónico" required>
+          <button type="submit" class="btn btn--primary btn--lg">Suscribirme</button>
+        </div>
+        {%- if form.posted_successfully? -%}<p style="margin-top:12px;color:var(--green);font-weight:700">¡Gracias por suscribirte! 🐾</p>{%- endif -%}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="pl-toast">🛒 <span>Añadido</span></div>
+
+<script>
+  (function(){
+    document.documentElement.classList.add('js');
+    var els = document.querySelectorAll('.reveal');
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }); }, {threshold:.12});
+      els.forEach(function(el){ io.observe(el); });
+      setTimeout(function(){ els.forEach(function(el){ el.classList.add('in'); }); }, 2200);
+    } else { els.forEach(function(el){ el.classList.add('in'); }); }
+    document.addEventListener('click', function(e){
+      var c = e.target.closest('[data-c]'); if(c){ c.parentElement.querySelectorAll('[data-c]').forEach(function(b){b.classList.remove('sel');}); c.classList.add('sel'); }
+      var s = e.target.closest('[data-s]'); if(s){ s.parentElement.querySelectorAll('[data-s]').forEach(function(b){b.classList.remove('sel');}); s.classList.add('sel'); }
+    });
+  })();
+</script>

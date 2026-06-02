@@ -1,0 +1,50 @@
+<section class="section">
+  <div class="page-width">
+    <div class="sec-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.title }}</h2>
+    </div>
+    <div class="benefits">
+      {%- for block in section.blocks -%}
+        <div class="benefit" {{ block.shopify_attributes }}>
+          <div class="benefit__ico">{{ block.settings.icon }}</div>
+          <h3>{{ block.settings.heading }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Beneficios",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "💚 Por qué PawLove?" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Pensado para ellos y para ti" }
+  ],
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji", "default": "🚀" },
+        { "type": "text", "id": "heading", "label": "Título", "default": "Envío a España" },
+        { "type": "textarea", "id": "text", "label": "Texto", "default": "8-18 días por Ecoscooting y Correos. Gratis en pedidos +40€" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Beneficios",
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "🚀", "heading": "Envío a España", "text": "8-18 días por Ecoscooting y Correos. Gratis en pedidos +40€" } },
+        { "type": "benefit", "settings": { "icon": "🛡️", "heading": "Productos verificados", "text": "Solo productos testados y seguros para tu mascota" } },
+        { "type": "benefit", "settings": { "icon": "↩️", "heading": "30 días devolución", "text": "Si no estás satisfecho, te devolvemos el dinero sin preguntas" } },
+        { "type": "benefit", "settings": { "icon": "💬", "heading": "Soporte real", "text": "Nuestro equipo de amantes de mascotas te responde siempre" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

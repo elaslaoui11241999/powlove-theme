@@ -1,0 +1,49 @@
+<section class="section">
+  <div class="page-width">
+    <div class="sec-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.title }}</h2>
+    </div>
+
+    {%- assign coll = collections[section.settings.collection] -%}
+    <div class="product-grid">
+      {%- if coll != empty and coll.products.size > 0 -%}
+        {%- for product in coll.products limit: section.settings.limit -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <div class="card">
+            <div class="card__media">{% render 'media-placeholder', uid: i, label: 'foto producto' %}</div>
+            <div class="card__body">
+              {% render 'stars', rating: 5 %}
+              <span class="card__title">Producto de ejemplo</span>
+              <span class="card__price">€0,00</span>
+              <span class="card__cta btn btn--ghost">Ver producto 🐾</span>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_view_all -%}
+      <div style="text-align:center;margin-top:40px;">
+        <a href="{{ coll.url | default: routes.all_products_collection_url }}" class="btn btn--ghost btn--lg">Ver todos los productos</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cuadrícula de productos",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "⭐ Nuestros productos" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Todos los productos" },
+    { "type": "collection", "id": "collection", "label": "Colección" },
+    { "type": "range", "id": "limit", "label": "Nº de productos", "min": 4, "max": 16, "step": 4, "default": 8 },
+    { "type": "checkbox", "id": "show_view_all", "label": "Mostrar botón 'Ver todos'", "default": true }
+  ],
+  "presets": [ { "name": "Cuadrícula de productos" } ]
+}
+{% endschema %}

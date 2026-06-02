@@ -1,0 +1,3 @@
+User-agent: *
+{% for rule in robots.default_rules %}{{ rule }}
+{% endfor %}{% if robots.sitemap %}Sitemap: {{ robots.sitemap }}{% endif %}

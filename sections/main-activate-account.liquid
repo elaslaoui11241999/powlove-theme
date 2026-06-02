@@ -1,0 +1,20 @@
+<section class="section">
+  <div class="page-width account-narrow">
+    <div class="sec-head"><h1>Activar cuenta</h1><p style="color:var(--color-ink-soft);">Crea una contraseña para activar tu cuenta.</p></div>
+    <div class="account-card">
+      {% form 'activate_customer_password' %}
+        {{ form.errors | default_errors }}
+        <label class="field"><span>Contraseña</span><input type="password" name="customer[password]" required></label>
+        <label class="field"><span>Confirmar contraseña</span><input type="password" name="customer[password_confirmation]" required></label>
+        <div style="display:flex;gap:12px;margin-top:16px;">
+          <button type="submit" class="btn btn--primary btn--lg">Activar cuenta</button>
+          <button type="submit" name="decline" class="btn btn--ghost btn--lg">Rechazar</button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Activar cuenta", "settings": [] }
+{% endschema %}

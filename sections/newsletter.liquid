@@ -1,0 +1,32 @@
+<section class="section">
+  <div class="page-width">
+    <div class="newsletter">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" style="color:var(--color-accent)">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.title }}</h2>
+      <p style="opacity:.85;max-width:46ch;margin:0 auto;">{{ section.settings.text }}</p>
+      {% form 'customer' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="newsletter__form">
+          <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" required>
+          <button type="submit" class="btn btn--primary btn--lg">{{ section.settings.button_label }}</button>
+        </div>
+        {%- if form.posted_successfully? -%}
+          <p style="margin-top:14px;color:#fff;">{{ 'general.newsletter_form.confirmation' | t }}</p>
+        {%- endif -%}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "📧 Newsletter" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Únete a la familia PawLove 🐾" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Recibe ofertas exclusivas y novedades antes que nadie" },
+    { "type": "text", "id": "button_label", "label": "Botón", "default": "Suscribirme 🐾" }
+  ],
+  "presets": [ { "name": "Newsletter" } ]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+{%- comment -%} Striped SVG placeholder for missing media {%- endcomment -%}
+<svg class="svg-placeholder" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{{ label | default: 'imagen' }}">
+  <defs>
+    <pattern id="stripe-{{ uid }}" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="{{ settings.color_surface_2 }}"/>
+      <rect width="4" height="8" fill="{{ settings.color_border }}"/>
+    </pattern>
+  </defs>
+  <rect width="100" height="100" fill="url(#stripe-{{ uid }})"/>
+  <text x="50" y="52" text-anchor="middle" font-family="monospace" font-size="5" fill="{{ settings.color_ink_soft }}">{{ label | default: 'foto producto' }}</text>
+</svg>

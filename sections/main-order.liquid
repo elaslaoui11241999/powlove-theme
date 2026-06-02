@@ -1,0 +1,30 @@
+<section class="section">
+  <div class="page-width">
+    <a href="{{ routes.account_url }}" style="color:var(--color-accent-dark);font-weight:700;">← Mi cuenta</a>
+    <h1 style="margin-top:14px;">Pedido {{ order.name }}</h1>
+    <p style="color:var(--color-ink-soft);">{{ order.created_at | date: '%d %B %Y' }} · {{ order.financial_status_label }} · {{ order.fulfillment_status_label }}</p>
+
+    <div class="order-table" style="margin-top:24px;">
+      <div class="order-table__head"><span>Producto</span><span>Cant.</span><span>Precio</span><span>Total</span></div>
+      {%- for line in order.line_items -%}
+        <div class="order-row">
+          <span><b>{{ line.title }}</b></span>
+          <span>{{ line.quantity }}</span>
+          <span>{{ line.price | money }}</span>
+          <span>{{ line.final_line_price | money }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="account-card" style="max-width:340px;margin-left:auto;margin-top:20px;">
+      <div class="cart-summary__row"><span>Subtotal</span><span>{{ order.line_items_subtotal_price | money }}</span></div>
+      <div class="cart-summary__row muted"><span>Envío</span><span>{{ order.shipping_price | money }}</span></div>
+      <div class="cart-summary__row muted"><span>Impuestos</span><span>{{ order.tax_price | money }}</span></div>
+      <div class="cart-summary__total"><span>Total</span><b>{{ order.total_net_amount | money }}</b></div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Pedido", "settings": [] }
+{% endschema %}

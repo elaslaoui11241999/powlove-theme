@@ -1,0 +1,35 @@
+{
+  "current": {
+    "color_bg": "#FAF4EA",
+    "color_surface": "#FFFFFF",
+    "color_surface_2": "#F3EAD9",
+    "color_ink": "#2A1B12",
+    "color_ink_soft": "#7A6A5C",
+    "color_accent": "#E8702A",
+    "color_accent_dark": "#C9551A",
+    "color_accent_soft": "#FCEFE3",
+    "color_border": "#E7DDCB",
+    "page_width": 1200,
+    "corner_radius": 16,
+    "logo_text": "PawLove",
+    "social_instagram": "",
+    "social_tiktok": "",
+    "social_facebook": ""
+  },
+  "presets": {
+    "PawLove": {
+      "color_bg": "#FAF4EA",
+      "color_surface": "#FFFFFF",
+      "color_surface_2": "#F3EAD9",
+      "color_ink": "#2A1B12",
+      "color_ink_soft": "#7A6A5C",
+      "color_accent": "#E8702A",
+      "color_accent_dark": "#C9551A",
+      "color_accent_soft": "#FCEFE3",
+      "color_border": "#E7DDCB",
+      "page_width": 1200,
+      "corner_radius": 16,
+      "logo_text": "PawLove"
+    }
+  }
+}

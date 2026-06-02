@@ -1,0 +1,129 @@
+{%- liquid
+  assign has_prod = false
+  if section.settings.product != blank
+    assign prod = all_products[section.settings.product]
+    if prod != empty and prod.title != blank
+      assign has_prod = true
+    endif
+  endif
+-%}
+<section class="section {% if section.settings.alt_bg %}pls--alt{% endif %}" id="{{ section.settings.anchor | default: section.id }}">
+  <div class="page-width">
+    <div class="pls {% if section.settings.reverse %}pls--rev{% endif %}">
+      <div class="pls__media">
+        {%- if section.settings.badge != blank -%}<span class="pls__badge">{{ section.settings.badge }}</span>{%- endif -%}
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.title }}" loading="lazy">
+        {%- elsif has_prod and prod.featured_image -%}
+          <img src="{{ prod.featured_image | image_url: width: 900 }}" alt="{{ prod.title }}" loading="lazy">
+        {%- else -%}
+          <img src="{{ section.settings.fallback | default: 'pl-scooper-hero.png' | asset_url }}" alt="{{ section.settings.title }}" loading="lazy">
+        {%- endif -%}
+      </div>
+      <div class="pls__info">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2>{{ section.settings.title }}</h2>
+        <p style="color:var(--color-ink-soft)">{{ section.settings.text }}</p>
+        {%- if section.blocks.size > 0 -%}
+          <ul class="pls__feat">
+            {%- for block in section.blocks -%}
+              <li {{ block.shopify_attributes }}><span class="pls__fi">{{ block.settings.icon }}</span> {{ block.settings.text }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+        {%- if section.settings.swatches != blank -%}
+          <div class="pls__colorrow">
+            <span class="pls__clbl">Color</span>
+            {%- assign cols = section.settings.swatches | split: ',' -%}
+            {%- for c in cols -%}<button type="button" class="pls__copt {% if forloop.first %}sel{% endif %}" style="background:{{ c | strip }}" data-c></button>{%- endfor -%}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.sizes != blank -%}
+          <div class="pls__colorrow">
+            <span class="pls__clbl">Tamaño</span>
+            {%- assign szs = section.settings.sizes | split: ',' -%}
+            {%- for s in szs -%}<button type="button" class="pls__sopt {% if forloop.first %}sel{% endif %}" data-s>{{ s | strip }}</button>{%- endfor -%}
+          </div>
+        {%- endif -%}
+        <div class="pls__buy">
+          <div class="pls__price">{% if has_prod %}{% if prod.compare_at_price > prod.price %}<del>{{ prod.compare_at_price | money }}</del>{% endif %}{{ prod.price | money }}{% else %}{% if section.settings.compare != blank %}<del>{{ section.settings.compare }}</del>{% endif %}{{ section.settings.price }}{% endif %}</div>
+          {%- if has_prod -%}
+            <form method="post" action="{{ routes.cart_add_url }}">
+              <input type="hidden" name="id" value="{{ prod.selected_or_first_available_variant.id }}">
+              <button type="submit" class="btn btn--primary btn--lg">{{ section.settings.btn | default: 'Añadir al carrito 🐾' }}</button>
+            </form>
+          {%- else -%}
+            <a href="{{ section.settings.link | default: '#' }}" class="btn btn--primary btn--lg">{{ section.settings.btn | default: 'Ver producto 🐾' }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.pls--alt{background:var(--color-surface)}
+.pls{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.pls--rev .pls__media{order:2}
+.pls__media{position:relative;border-radius:26px;overflow:hidden;background:var(--color-surface-2);border:1px solid var(--color-border);box-shadow:0 30px 60px -34px rgba(42,27,18,.5)}
+.pls__media img{width:100%;aspect-ratio:1.04/1;object-fit:cover}
+.pls__badge{position:absolute;top:18px;left:18px;background:var(--color-accent);color:#fff;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.8rem;padding:7px 15px;border-radius:999px}
+.pls__feat{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-direction:column;gap:13px}
+.pls__feat li{display:flex;align-items:flex-start;gap:12px;font-weight:600}
+.pls__fi{flex:none;width:34px;height:34px;border-radius:10px;background:var(--color-accent-soft);display:grid;place-items:center;font-size:1.05rem}
+.pls__buy{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px}
+.pls__price{font-family:'Domine',serif;font-weight:700;font-size:1.9rem}
+.pls__price del{color:var(--color-ink-soft);font-weight:400;font-size:1.15rem;margin-right:8px}
+.pls__colorrow{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.pls__clbl{font-family:'Fredoka',sans-serif;font-weight:600;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--color-ink-soft)}
+.pls__copt{width:30px;height:30px;border-radius:9px;border:2px solid var(--color-border);padding:0;transition:.15s}
+.pls__copt.sel,.pls__copt:hover{border-color:var(--color-accent);transform:scale(1.08)}
+.pls__sopt{width:auto;padding:6px 16px;border-radius:9px;border:2px solid var(--color-border);background:var(--color-surface);font-family:'Fredoka',sans-serif;font-weight:600;transition:.15s}
+.pls__sopt.sel,.pls__sopt:hover{border-color:var(--color-accent);color:var(--color-accent-dark)}
+@media(max-width:860px){.pls{grid-template-columns:1fr;gap:30px}.pls--rev .pls__media{order:0}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Spotlight producto",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Producto (recomendado)", "info": "Si lo eliges, el botón añade al carrito de verdad." },
+    { "type": "text", "id": "anchor", "label": "Ancla (id)", "info": "p.ej. scooper, correa, cinturon" },
+    { "type": "checkbox", "id": "reverse", "label": "Imagen a la derecha", "default": false },
+    { "type": "checkbox", "id": "alt_bg", "label": "Fondo alterno (blanco)", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "🪥 Paseos limpios" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Recoge sin agacharte, sin tocar nada" },
+    { "type": "textarea", "id": "text", "label": "Descripción", "default": "El recogedor portátil todo en uno: pinza, dispensador de bolsas y linterna LED." },
+    { "type": "text", "id": "badge", "label": "Badge sobre imagen", "default": "⚡ Oferta −33%" },
+    { "type": "text", "id": "swatches", "label": "Colores (hex, coma)", "default": "#3FB4B1,#E8702A" },
+    { "type": "text", "id": "sizes", "label": "Tamaños (coma)", "info": "Déjalo vacío si no aplica" },
+    { "type": "text", "id": "price", "label": "Precio (si no hay producto)", "default": "€19,95" },
+    { "type": "text", "id": "compare", "label": "Precio tachado", "default": "€29,95" },
+    { "type": "text", "id": "btn", "label": "Botón", "default": "Añadir al carrito 🐾" },
+    { "type": "url", "id": "link", "label": "Enlace (si no hay producto)" },
+    { "type": "image_picker", "id": "image", "label": "Imagen (opcional)" },
+    { "type": "text", "id": "fallback", "label": "Imagen por defecto del tema", "info": "pl-scooper-hero.png, pl-leash-colors.png, pl-seatbelt-hero.png" }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Beneficio",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji", "default": "🦴" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Beneficio del producto" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Spotlight producto",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "🦴", "text": "Pinza de un solo gesto: recoge sin mancharte" } },
+        { "type": "feature", "settings": { "icon": "💡", "text": "Linterna LED para pasear de noche" } },
+        { "type": "feature", "settings": { "icon": "♻️", "text": "Dispensador de bolsas + 1 rollo de regalo" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

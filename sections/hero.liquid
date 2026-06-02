@@ -1,0 +1,61 @@
+<section class="hero">
+  <div class="page-width">
+    <div class="hero__grid">
+      <div class="hero__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow">🐾 {{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h1 class="hero__title">{{ section.settings.title }}</h1>
+        <p class="hero__lead">{{ section.settings.lead }}</p>
+        <div class="hero__cta">
+          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--primary btn--lg">{{ section.settings.button_label }}</a>
+          {%- if section.settings.button2_label != blank -%}
+            <a href="{{ section.settings.button2_link }}" class="btn btn--ghost btn--lg">{{ section.settings.button2_label }}</a>
+          {%- endif -%}
+        </div>
+        <div class="hero__proof">
+          <div class="avatars">
+            <span style="background:#E8702A">SM</span>
+            <span style="background:#3E8E5A">CR</span>
+            <span style="background:#C9551A">AG</span>
+            <span style="background:#7A6A5C">JP</span>
+          </div>
+          <div>
+            {% render 'stars', rating: 5 %}
+            <div style="font-weight:800;">{{ section.settings.proof_text }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__media">
+        <div class="hero__photo">
+          {%- if section.settings.image != blank -%}
+            <img src="{{ section.settings.image | image_url: width: 800 }}" alt="" style="width:100%;height:100%;object-fit:cover;">
+          {%- else -%}
+            {% render 'media-placeholder', uid: 'hero', label: 'foto mascota feliz' %}
+          {%- endif -%}
+        </div>
+        <div class="hero__badge hero__badge--tl">⭐ 4.9 / 5</div>
+        <div class="hero__badge hero__badge--br">🚀 Envío 8-18 días</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "La tienda que tus mascotas merecen" },
+    { "type": "richtext", "id": "title", "label": "Título", "default": "<p>Todo el amor para tu mascota</p>" },
+    { "type": "textarea", "id": "lead", "label": "Descripción", "default": "Accesorios, juguetes e higiene para perros, gatos y más. Calidad premium al mejor precio con envío a toda España." },
+    { "type": "text", "id": "button_label", "label": "Botón principal", "default": "Ver productos 🐾" },
+    { "type": "url", "id": "button_link", "label": "Enlace botón principal" },
+    { "type": "text", "id": "button2_label", "label": "Botón secundario", "default": "Explorar categorías" },
+    { "type": "url", "id": "button2_link", "label": "Enlace botón secundario" },
+    { "type": "text", "id": "proof_text", "label": "Texto de prueba social", "default": "+5.000 mascotas felices" },
+    { "type": "image_picker", "id": "image", "label": "Imagen" }
+  ],
+  "presets": [ { "name": "Hero" } ]
+}
+{% endschema %}

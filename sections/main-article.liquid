@@ -1,0 +1,27 @@
+<article class="section">
+  <div class="page-width" style="max-width:720px;">
+    <a href="{{ blog.url }}" style="color:var(--color-accent-dark);font-weight:700;">← {{ blog.title }}</a>
+    <h1 style="margin-top:16px;">{{ article.title }}</h1>
+    <div style="color:var(--color-ink-soft);font-weight:700;margin-bottom:24px;">{{ article.published_at | date: '%d %b %Y' }}{% if article.author %} · {{ article.author }}{% endif %}</div>
+    {%- if article.image -%}
+      <div style="border-radius:var(--radius);overflow:hidden;margin-bottom:28px;"><img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.image.alt | escape }}"></div>
+    {%- endif -%}
+    <div class="rte">{{ article.content }}</div>
+
+    {%- if blog.comments_enabled? -%}
+      <div style="margin-top:48px;">
+        <h2 style="font-size:1.4rem;">Comentarios</h2>
+        {%- for comment in article.comments -%}
+          <div style="border-top:1px solid var(--color-border);padding:16px 0;">
+            <strong>{{ comment.author }}</strong>
+            <div class="rte">{{ comment.content }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>
+
+{% schema %}
+{ "name": "Artículo", "settings": [] }
+{% endschema %}

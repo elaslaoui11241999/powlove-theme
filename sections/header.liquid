@@ -1,0 +1,38 @@
+<header class="header">
+  <div class="header__inner">
+    <a href="{{ routes.root_url }}" class="header__logo">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" style="max-height:38px;width:auto;">
+      {%- else -%}
+        🐾 {{ settings.logo_text | default: shop.name }}
+      {%- endif -%}
+    </a>
+
+    <nav class="header__nav" role="navigation">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- else -%}
+        <a href="{{ routes.root_url }}">Inicio</a>
+        <a href="{{ routes.all_products_collection_url }}">Productos</a>
+        <a href="{{ routes.search_url }}">Buscar</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="header__actions">
+      <a href="{{ routes.search_url }}" aria-label="Buscar" class="cart-link">🔍</a>
+      <a href="{{ routes.cart_url }}" class="cart-link" aria-label="{{ 'accessibility.cart' | t }}">
+        🛒 <span class="count">{{ cart.item_count }}</span>
+      </a>
+      <button class="nav-toggle" data-nav-toggle aria-label="{{ 'accessibility.menu' | t }}">☰</button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Encabezado",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menú", "default": "main-menu" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,12 @@
+<section class="page-width">
+  <div class="err">
+    <div class="big">404</div>
+    <h1>{{ 'general.404.title' | t }}</h1>
+    <p style="color:var(--color-ink-soft);">{{ 'general.404.subtext' | t }}</p>
+    <a href="{{ routes.root_url }}" class="btn btn--primary btn--lg" style="margin-top:16px;">🐾 {{ 'general.404.link' | t }}</a>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "404", "settings": [] }
+{% endschema %}

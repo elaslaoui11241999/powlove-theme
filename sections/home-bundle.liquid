@@ -1,0 +1,58 @@
+<section class="section" id="bundle">
+  <div class="page-width">
+    <div class="plb">
+      <div class="plb__main">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" style="color:var(--color-accent)">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2>{{ section.settings.title }}</h2>
+        <p>{{ section.settings.text }}</p>
+        {%- if section.settings.product != blank -%}
+          {%- assign prod = all_products[section.settings.product] -%}
+          <form method="post" action="{{ routes.cart_add_url }}" style="margin-top:22px">
+            <input type="hidden" name="id" value="{{ prod.selected_or_first_available_variant.id }}">
+            <button type="submit" class="btn btn--primary btn--lg">{{ section.settings.btn }}</button>
+          </form>
+        {%- else -%}
+          <a href="{{ section.settings.link | default: '#productos' }}" class="btn btn--primary btn--lg" style="margin-top:22px">{{ section.settings.btn }}</a>
+        {%- endif -%}
+      </div>
+      <div class="plb__price">
+        {%- if section.settings.was != blank -%}<div class="plb__was">{{ section.settings.was }}</div>{%- endif -%}
+        <div class="plb__now">{{ section.settings.now }}</div>
+        {%- if section.settings.save != blank -%}<span class="plb__save">{{ section.settings.save }}</span>{%- endif -%}
+        <div style="margin-top:14px;color:rgba(251,239,226,.7);font-size:.9rem">🚚 {{ section.settings.note }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.plb{background:var(--color-ink);color:#FBEFE2;border-radius:30px;padding:clamp(36px,5vw,64px);display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+.plb::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(232,112,42,.35),transparent 70%);top:-160px;left:-120px}
+.plb__main{position:relative;z-index:1}
+.plb h2{color:#fff}
+.plb p{color:rgba(251,239,226,.78);max-width:46ch}
+.plb__price{position:relative;z-index:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:28px;text-align:center}
+.plb__was{color:rgba(251,239,226,.6);text-decoration:line-through;font-size:1.2rem}
+.plb__now{font-family:'Domine',serif;font-weight:700;font-size:3rem;color:#fff;line-height:1}
+.plb__save{display:inline-block;background:#3E8E5A;color:#fff;font-family:'Fredoka',sans-serif;font-weight:600;padding:5px 14px;border-radius:999px;margin-top:8px}
+@media(max-width:760px){.plb{grid-template-columns:1fr;gap:26px}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Pack / Bundle",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "🎁 Pack completo" },
+    { "type": "text", "id": "title", "label": "Título", "default": "El Pack PawLove: los 3, con −30%" },
+    { "type": "textarea", "id": "text", "label": "Descripción", "default": "Recogedor portátil + correa retráctil + cinturón de seguridad. Todo lo que necesitas para pasear y viajar con tu mascota, a un precio irresistible." },
+    { "type": "product", "id": "product", "label": "Producto del pack (opcional)", "info": "Crea un producto 'Pack' en Shopify y enlázalo aquí para que el botón añada al carrito." },
+    { "type": "url", "id": "link", "label": "Enlace (si no hay producto)" },
+    { "type": "text", "id": "btn", "label": "Botón", "default": "Quiero el pack 🐾" },
+    { "type": "text", "id": "was", "label": "Precio antes", "default": "€82,85" },
+    { "type": "text", "id": "now", "label": "Precio ahora", "default": "€57,95" },
+    { "type": "text", "id": "save", "label": "Ahorro", "default": "Ahorras €24,90" },
+    { "type": "text", "id": "note", "label": "Nota", "default": "Envío gratis incluido" }
+  ],
+  "presets": [ { "name": "Pack / Bundle" } ]
+}
+{% endschema %}

@@ -1,0 +1,5 @@
+{%- comment -%} Star rating row. Params: rating (0-5) {%- endcomment -%}
+{%- assign r = rating | default: 5 | round -%}
+<span class="stars" aria-label="{{ r }}/5">
+  {%- for i in (1..5) -%}{% if i <= r %}★{% else %}☆{% endif %}{%- endfor -%}
+</span>

@@ -1,0 +1,52 @@
+<section class="section">
+  <div class="page-width">
+    <div class="sec-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.title }}</h2>
+    </div>
+    <div class="cats">
+      {%- for block in section.blocks -%}
+        {%- assign coll = collections[block.settings.collection] -%}
+        <a href="{{ coll.url | default: '#' }}" class="cat-chip" {{ block.shopify_attributes }}>
+          {{ block.settings.emoji }} {{ block.settings.label | default: coll.title }}
+          <small>{{ coll.products_count }} productos</small>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Categorías",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "🐾 Explora" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Encuentra lo que necesita tu compañero" }
+  ],
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoría",
+      "settings": [
+        { "type": "text", "id": "emoji", "label": "Emoji", "default": "🐶" },
+        { "type": "text", "id": "label", "label": "Etiqueta" },
+        { "type": "collection", "id": "collection", "label": "Colección" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Categorías",
+      "blocks": [
+        { "type": "category", "settings": { "emoji": "🪥", "label": "Higiene" } },
+        { "type": "category", "settings": { "emoji": "🎾", "label": "Juguetes" } },
+        { "type": "category", "settings": { "emoji": "🦮", "label": "Paseos" } },
+        { "type": "category", "settings": { "emoji": "🐶", "label": "Perros" } },
+        { "type": "category", "settings": { "emoji": "🐱", "label": "Gatos" } },
+        { "type": "category", "settings": { "emoji": "✨", "label": "Ver todo" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

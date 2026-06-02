@@ -1,0 +1,27 @@
+<section class="section">
+  <div class="page-width" style="max-width:760px;">
+    <div class="sec-head"><span class="eyebrow">🐾 Blog PawLove</span><h1>{{ blog.title }}</h1></div>
+    <div class="article-list">
+      {%- for article in blog.articles -%}
+        <a href="{{ article.url }}" class="article-card">
+          <div class="article-card__media">
+            {%- if article.image -%}<img src="{{ article.image | image_url: width: 800 }}" alt="{{ article.image.alt | escape }}" loading="lazy">{%- else -%}{% render 'media-placeholder', uid: article.id, label: 'imagen' %}{%- endif -%}
+          </div>
+          <div class="article-card__body">
+            <div class="article-card__meta">{{ article.published_at | date: '%d %b %Y' }}{% if article.author %} · {{ article.author }}{% endif %}</div>
+            <h3>{{ article.title }}</h3>
+            <p>{{ article.excerpt_or_content | strip_html | truncate: 140 }}</p>
+            <span class="article-card__more">Leer más →</span>
+          </div>
+        </a>
+      {%- else -%}
+        <p>Aún no hay artículos.</p>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}<div style="text-align:center;margin-top:40px;">{{ paginate | default_pagination }}</div>{%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Blog", "settings": [] }
+{% endschema %}

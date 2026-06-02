@@ -1,0 +1,29 @@
+<section class="section">
+  <div class="page-width account-narrow">
+    <div class="sec-head"><span class="eyebrow">🐾 Mi cuenta</span><h1>Iniciar sesión</h1></div>
+    <div class="account-card">
+      {% form 'customer_login' %}
+        {{ form.errors | default_errors }}
+        <label class="field"><span>Email</span><input type="email" name="customer[email]" required></label>
+        <label class="field"><span>Contraseña</span><input type="password" name="customer[password]"></label>
+        <a href="#recover" style="font-size:.88rem;color:var(--color-accent-dark);font-weight:700;">¿Olvidaste tu contraseña?</a>
+        <button type="submit" class="btn btn--primary btn--block btn--lg" style="margin-top:16px;">Entrar 🐾</button>
+      {% endform %}
+      <p style="text-align:center;margin-top:18px;color:var(--color-ink-soft);">¿No tienes cuenta? <a href="{{ routes.account_register_url }}" style="color:var(--color-accent-dark);font-weight:800;">Regístrate</a></p>
+    </div>
+
+    <div id="recover" class="account-card" style="margin-top:20px;">
+      <h3 style="font-size:1.1rem;">Recuperar contraseña</h3>
+      {% form 'recover_customer_password' %}
+        {{ form.errors | default_errors }}
+        {%- if form.posted_successfully? -%}<p style="color:#3E8E5A;font-weight:700;">Te enviamos un email para restablecerla.</p>{%- endif -%}
+        <label class="field"><span>Email</span><input type="email" name="email" required></label>
+        <button type="submit" class="btn btn--ghost btn--block" style="margin-top:12px;">Enviar enlace</button>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Login", "settings": [] }
+{% endschema %}

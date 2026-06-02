@@ -1,0 +1,22 @@
+<section class="section">
+  <div class="page-width account-narrow">
+    <div class="sec-head"><span class="eyebrow">🐾 Mi cuenta</span><h1>Crear cuenta</h1></div>
+    <div class="account-card">
+      {% form 'create_customer' %}
+        {{ form.errors | default_errors }}
+        <div class="form-grid">
+          <label class="field"><span>Nombre</span><input type="text" name="customer[first_name]"></label>
+          <label class="field"><span>Apellidos</span><input type="text" name="customer[last_name]"></label>
+          <label class="field field--full"><span>Email</span><input type="email" name="customer[email]" required></label>
+          <label class="field field--full"><span>Contraseña</span><input type="password" name="customer[password]" required></label>
+        </div>
+        <button type="submit" class="btn btn--primary btn--block btn--lg" style="margin-top:16px;">Crear cuenta 🐾</button>
+      {% endform %}
+      <p style="text-align:center;margin-top:18px;color:var(--color-ink-soft);">¿Ya tienes cuenta? <a href="{{ routes.account_login_url }}" style="color:var(--color-accent-dark);font-weight:800;">Inicia sesión</a></p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Registro", "settings": [] }
+{% endschema %}

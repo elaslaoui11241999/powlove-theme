@@ -1,0 +1,24 @@
+{%- comment -%} Product card. Param: product {%- endcomment -%}
+<a href="{{ product.url }}" class="card">
+  <div class="card__media">
+    {%- if product.compare_at_price > product.price -%}
+      <span class="card__flag">Oferta</span>
+    {%- endif -%}
+    {%- if product.featured_image -%}
+      <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | escape | default: product.title }}" loading="lazy" width="500" height="500">
+    {%- else -%}
+      {% render 'media-placeholder', uid: product.id, label: 'foto producto' %}
+    {%- endif -%}
+  </div>
+  <div class="card__body">
+    {% render 'stars', rating: 5 %}
+    <span class="card__title">{{ product.title }}</span>
+    <span class="card__price">
+      {%- if product.compare_at_price > product.price -%}
+        <del>{{ product.compare_at_price | money }}</del>
+      {%- endif -%}
+      {{ product.price | money }}
+    </span>
+    <span class="card__cta btn btn--ghost">Ver producto 🐾</span>
+  </div>
+</a>

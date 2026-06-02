@@ -1,0 +1,63 @@
+<footer class="footer">
+  <div class="page-width">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="{{ routes.root_url }}" class="header__logo" style="margin-bottom:14px;">🐾 {{ settings.logo_text | default: shop.name }}</a>
+        <p>{{ section.settings.tagline }}</p>
+        <div style="display:flex;gap:12px;margin-top:16px;">
+          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" class="cart-link" aria-label="Instagram">Instagram</a>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" class="cart-link" aria-label="TikTok">TikTok</a>{%- endif -%}
+          {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" class="cart-link" aria-label="Facebook">Facebook</a>{%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          <h4>{{ block.settings.heading }}</h4>
+          <ul>
+            {%- for link in linklists[block.settings.menu].links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- else -%}
+              <li><a href="{{ routes.root_url }}">Inicio</a></li>
+              <li><a href="{{ routes.all_products_collection_url }}">Productos</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="footer__bottom">
+      © {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'sections.footer.copyright' | t }} 🐾 Hecho con amor
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de página",
+  "settings": [
+    { "type": "textarea", "id": "tagline", "label": "Descripción", "default": "La tienda de confianza para los que aman a sus mascotas. Productos de calidad, precios justos y mucho amor." }
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Columna de menú",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Título", "default": "Tienda" },
+        { "type": "link_list", "id": "menu", "label": "Menú" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pie de página",
+      "blocks": [
+        { "type": "menu", "settings": { "heading": "Tienda" } },
+        { "type": "menu", "settings": { "heading": "Ayuda" } },
+        { "type": "menu", "settings": { "heading": "Legal" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

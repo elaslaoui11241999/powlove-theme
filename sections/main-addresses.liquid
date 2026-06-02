@@ -1,0 +1,38 @@
+<section class="section">
+  <div class="page-width account-narrow">
+    <a href="{{ routes.account_url }}" style="color:var(--color-accent-dark);font-weight:700;">← Mi cuenta</a>
+    <div class="sec-head" style="margin-top:14px;"><h1>Mis direcciones</h1></div>
+
+    <div class="account-card">
+      <h3 style="font-size:1.1rem;">Añadir dirección</h3>
+      {% form 'customer_address', customer.new_address %}
+        <div class="form-grid">
+          <label class="field"><span>Nombre</span>{{ form.first_name }}</label>
+          <label class="field"><span>Apellidos</span>{{ form.last_name }}</label>
+          <label class="field field--full"><span>Dirección</span>{{ form.address1 }}</label>
+          <label class="field"><span>Ciudad</span>{{ form.city }}</label>
+          <label class="field"><span>Código postal</span>{{ form.zip }}</label>
+          <label class="field"><span>País</span>{{ form.country }}</label>
+          <label class="field"><span>Teléfono</span>{{ form.phone }}</label>
+        </div>
+        <button type="submit" class="btn btn--primary btn--lg" style="margin-top:14px;">Guardar dirección</button>
+      {% endform %}
+    </div>
+
+    {%- for address in customer.addresses -%}
+      <div class="account-card" style="margin-top:16px;">
+        <div class="rte">{{ address | format_address }}</div>
+        <div style="display:flex;gap:12px;margin-top:12px;">
+          <a href="{{ address.url }}" class="btn btn--ghost">Editar</a>
+          {% form 'customer_address', address %}
+            <button type="submit" name="_method" value="delete" class="btn btn--ghost" onclick="return confirm('¿Eliminar esta dirección?')">Eliminar</button>
+          {% endform %}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Direcciones", "settings": [] }
+{% endschema %}

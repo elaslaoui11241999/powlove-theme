@@ -1,0 +1,61 @@
+<section class="section">
+  <div class="page-width">
+    <div class="sec-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.title }}</h2>
+      <div style="margin-top:8px;">{% render 'stars', rating: 5 %} <strong>{{ section.settings.rating_text }}</strong></div>
+    </div>
+    <div class="testi-grid">
+      {%- for block in section.blocks -%}
+        <div class="testi" {{ block.shopify_attributes }}>
+          {% render 'stars', rating: 5 %}
+          <p class="testi__quote">“{{ block.settings.quote }}”</p>
+          <div class="testi__person">
+            <div class="testi__avatar" style="background:{{ block.settings.color }}">{{ block.settings.initials }}</div>
+            <div>
+              <div class="testi__name">{{ block.settings.name }}</div>
+              <div class="testi__meta">{{ block.settings.meta }}</div>
+              <div class="testi__verified">✓ {{ block.settings.verified }}</div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reseñas",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño", "default": "💬 Clientes reales" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Más de 5.000 mascotas felices" },
+    { "type": "text", "id": "rating_text", "label": "Texto de valoración", "default": "Valoración media 4.9/5" }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Reseña",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Texto", "default": "Producto increíble, mi mascota está feliz. Lo recomiendo 100%!" },
+        { "type": "text", "id": "initials", "label": "Iniciales", "default": "SM" },
+        { "type": "color", "id": "color", "label": "Color avatar", "default": "#E8702A" },
+        { "type": "text", "id": "name", "label": "Nombre", "default": "Sara M." },
+        { "type": "text", "id": "meta", "label": "Detalle", "default": "Madrid · Dueña de gata persa" },
+        { "type": "text", "id": "verified", "label": "Verificación", "default": "Compra verificada · Hace 3 días" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reseñas",
+      "blocks": [
+        { "type": "review", "settings": { "quote": "El guante quitapelos es increíble. Mi gata persa suelta mucho pelo y con esto en 5 minutos queda perfecta.", "initials": "SM", "color": "#E8702A", "name": "Sara M.", "meta": "Madrid · Dueña de gata persa", "verified": "Compra verificada · Hace 3 días" } },
+        { "type": "review", "settings": { "quote": "La pelota dental es genial, a mi perro le encanta y al mismo tiempo le limpia los dientes. Vino bien embalada.", "initials": "CR", "color": "#3E8E5A", "name": "Carlos R.", "meta": "Barcelona · Dueño de Beagle", "verified": "Compra verificada · Hace 1 semana" } },
+        { "type": "review", "settings": { "quote": "El recogedor con palo ha sido un cambio de vida. Nada de agacharse, muy práctico. Calidad excelente.", "initials": "AG", "color": "#C9551A", "name": "Ana G.", "meta": "Valencia · Dueña de Golden", "verified": "Compra verificada · Hace 5 días" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

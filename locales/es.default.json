@@ -1,0 +1,78 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Etiquetado \"{{ tags }}\"",
+      "page": "Página {{ page }}"
+    },
+    "404": {
+      "title": "Página no encontrada",
+      "subtext": "La página que buscas no existe.",
+      "link": "Volver a la tienda"
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente"
+    },
+    "search": {
+      "search": "Buscar",
+      "placeholder": "Buscar productos...",
+      "no_results": "No se encontraron resultados para \"{{ terms }}\".",
+      "results_with_count": "{{ count }} resultado para \"{{ terms }}\"",
+      "results_with_count_plural": "{{ count }} resultados para \"{{ terms }}\"",
+      "title": "Buscar en la tienda"
+    },
+    "newsletter_form": {
+      "newsletter_email": "Tu correo electrónico",
+      "confirmation": "¡Gracias por suscribirte!"
+    }
+  },
+  "accessibility": {
+    "skip_to_text": "Saltar al contenido",
+    "close": "Cerrar",
+    "cart": "Carrito",
+    "menu": "Menú",
+    "star_reviews_info": "{{ rating_value }} de {{ rating_max }} estrellas"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Añadir al carrito",
+      "sold_out": "Agotado",
+      "unavailable": "No disponible",
+      "on_sale": "Oferta",
+      "from_price": "Desde {{ price }}",
+      "quantity": "Cantidad",
+      "regular_price": "Precio normal",
+      "sale_price": "Precio de oferta",
+      "save": "Ahorras {{ amount }}",
+      "include_taxes": "Impuestos incluidos.",
+      "shipping_policy": "Envío calculado en el pago.",
+      "description": "Descripción"
+    },
+    "facets": {
+      "sort_by_label": "Ordenar por",
+      "product_count": "{{ count }} producto",
+      "product_count_plural": "{{ count }} productos"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Tu carrito",
+      "empty": "Tu carrito está vacío",
+      "continue_shopping": "Seguir comprando",
+      "subtotal": "Subtotal",
+      "checkout": "Finalizar compra",
+      "remove": "Quitar",
+      "taxes_and_shipping_at_checkout": "Impuestos y envío calculados en el pago",
+      "free_shipping_progress": "Te faltan {{ amount }} para envío gratis",
+      "free_shipping_qualified": "¡Tienes envío gratis! 🎉"
+    }
+  },
+  "sections": {
+    "header": {
+      "announcement": "Anuncio"
+    },
+    "footer": {
+      "copyright": "Todos los derechos reservados."
+    }
+  }
+}

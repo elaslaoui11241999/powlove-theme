@@ -1,0 +1,34 @@
+<div class="page-width">
+  <div class="coll-head">
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}<p style="color:var(--color-ink-soft);max-width:60ch;margin:0 auto;">{{ collection.description }}</p>{%- endif -%}
+  </div>
+
+  <div class="facets">
+    <div>{{ collection.products_count }} {% if collection.products_count == 1 %}producto{% else %}productos{% endif %}</div>
+    {% form 'collection_sort' %}
+      <select name="sort_by" onchange="this.form.submit()" aria-label="{{ 'products.facets.sort_by_label' | t }}">
+        {%- assign sort = collection.sort_by | default: collection.default_sort_by -%}
+        <option value="manual" {% if sort == 'manual' %}selected{% endif %}>Destacados</option>
+        <option value="price-ascending" {% if sort == 'price-ascending' %}selected{% endif %}>Precio: bajo a alto</option>
+        <option value="price-descending" {% if sort == 'price-descending' %}selected{% endif %}>Precio: alto a bajo</option>
+        <option value="created-descending" {% if sort == 'created-descending' %}selected{% endif %}>Más nuevos</option>
+        <option value="best-selling" {% if sort == 'best-selling' %}selected{% endif %}>Más vendidos</option>
+      </select>
+    {% endform %}
+  </div>
+
+  <div class="product-grid" style="padding-bottom:64px;">
+    {%- paginate collection.products by 16 -%}
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p>No hay productos en esta colección todavía.</p>
+      {%- endfor -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Colección", "settings": [] }
+{% endschema %}

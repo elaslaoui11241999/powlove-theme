@@ -1,0 +1,28 @@
+<section class="section">
+  <div class="page-width" style="max-width:680px;">
+    <div class="sec-head"><span class="eyebrow">💬 Contacto</span><h1>{{ section.settings.heading }}</h1><p style="color:var(--color-ink-soft);">{{ section.settings.subtext }}</p></div>
+    {% form 'contact' %}
+      {%- if form.posted_successfully? -%}
+        <p style="background:var(--color-accent-soft);color:var(--color-accent-dark);padding:14px 18px;border-radius:12px;font-weight:700;">¡Gracias! Te responderemos pronto. 🐾</p>
+      {%- endif -%}
+      {{ form.errors | default_errors }}
+      <div class="form-grid">
+        <label class="field"><span>Nombre</span><input type="text" name="contact[name]" required></label>
+        <label class="field"><span>Email</span><input type="email" name="contact[email]" required></label>
+        <label class="field field--full"><span>Asunto</span><input type="text" name="contact[subject]"></label>
+        <label class="field field--full"><span>Mensaje</span><textarea name="contact[body]" rows="5" required></textarea></label>
+      </div>
+      <button type="submit" class="btn btn--primary btn--lg" style="margin-top:18px;">Enviar mensaje 🐾</button>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contacto",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "¿Hablamos?" },
+    { "type": "textarea", "id": "subtext", "label": "Texto", "default": "Escríbenos y nuestro equipo de amantes de mascotas te responde lo antes posible." }
+  ]
+}
+{% endschema %}

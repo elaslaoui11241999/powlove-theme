@@ -1,0 +1,40 @@
+<div class="announcement">
+  <div class="announcement__track" aria-hidden="true">
+    <ul>
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+      {%- endfor -%}
+      {%- comment -%} duplicate for seamless marquee {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        <li>{{ block.settings.text }}</li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Barra de anuncios",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Mensaje",
+      "settings": [
+        { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Envío gratis en pedidos +<b>40€</b></p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barra de anuncios",
+      "blocks": [
+        { "type": "message", "settings": { "text": "<p>Envío gratis en pedidos +<b>40€</b></p>" } },
+        { "type": "message", "settings": { "text": "<p>Entrega <b>8-18 días</b> · Ecoscooting + Correos</p>" } },
+        { "type": "message", "settings": { "text": "<p>Devolución <b>30 días</b> gratis</p>" } },
+        { "type": "message", "settings": { "text": "<p>Código <b>PAWLOVE10</b></p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
