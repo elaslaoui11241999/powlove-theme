@@ -36,7 +36,19 @@
     <div class="trust__it"><span>🚚</span> Envío a toda España</div>
     <div class="trust__it"><span>🔒</span> Pago 100% seguro</div>
     <div class="trust__it"><span>↩️</span> 30 días de devolución</div>
-    <div class="trust__it"><span>💬</span> Soporte que responde</div>
+    <div class="trust__it trust__it--soporte" onclick="toggleSoporte(event)" style="cursor:pointer;position:relative" title="Ver contacto">
+      <span>💬</span> Soporte que responde
+      <div class="soporte-popup" id="soporte-popup">
+        <a href="https://wa.me/34682238049?text=Hola%2C%20tengo%20una%20consulta%20sobre%20mi%20pedido" target="_blank" rel="noopener" class="soporte-link">
+          <span class="soporte-ico">📱</span>
+          <div><div class="soporte-lbl">WhatsApp</div><div class="soporte-val">682 238 049</div></div>
+        </a>
+        <a href="mailto:powlove.animales@gmail.com" class="soporte-link">
+          <span class="soporte-ico">📧</span>
+          <div><div class="soporte-lbl">Email</div><div class="soporte-val">powlove.animales@gmail.com</div></div>
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -203,6 +215,18 @@
 </section>
 
 <div class="toast" id="pl-toast">🛒 <span>Añadido</span></div>
+
+<script>
+function toggleSoporte(e){
+  e.stopPropagation();
+  document.getElementById('soporte-popup').classList.toggle('show');
+}
+document.addEventListener('click',function(){
+  var p=document.getElementById('soporte-popup');
+  if(p) p.classList.remove('show');
+});
+document.getElementById('soporte-popup').addEventListener('click',function(e){e.stopPropagation();});
+</script>
 
 <script>
   (function(){
