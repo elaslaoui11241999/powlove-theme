@@ -8,11 +8,7 @@
         {%- else -%}
           {% render 'media-placeholder', uid: 'pdp', label: 'foto producto' %}
         {%- endif -%}
-      </div>
-      {%- if product.images.size > 1 -%}
-        <div class="pdp__thumbs">
-          {%- for image in product.images limit: 6 -%}
-            <button class="pdp__thumb {% if forloop.first %}is-active{% endif %}" data-thumb data-full="{{ image | image_url: width: 900 }}" type="button">
+      </div>" data-thumb data-full="{{ image | image_url: width: 900 }}" type="button">
               <img src="{{ image | image_url: width: 160 }}" alt="{{ image.alt | escape }}" loading="lazy">
             </button>
           {%- endfor -%}
