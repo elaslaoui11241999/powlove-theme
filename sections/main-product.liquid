@@ -8,12 +8,7 @@
         {%- else -%}
           {% render 'media-placeholder', uid: 'pdp', label: 'foto producto' %}
         {%- endif -%}
-      </div>" data-thumb data-full="{{ image | image_url: width: 900 }}" type="button">
-              <img src="{{ image | image_url: width: 160 }}" alt="{{ image.alt | escape }}" loading="lazy">
-            </button>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
+      </div>
     </div>
 
     {%- comment -%} ===== Info ===== {%- endcomment -%}
