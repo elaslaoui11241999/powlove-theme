@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_bg": "#FAF4EA",
@@ -14,7 +23,29 @@
     "logo_text": "PawLove",
     "social_instagram": "",
     "social_tiktok": "",
-    "social_facebook": ""
+    "social_facebook": "",
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {}
+      },
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {}
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "7689690182613285879": {
+        "type": "shopify://apps/wisereviews-reviews-importer/blocks/wise-reviews/9ef986f0-166f-4cdf-8a67-c9585e8df5a9",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "presets": {
     "PawLove": {
