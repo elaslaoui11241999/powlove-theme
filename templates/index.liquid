@@ -169,7 +169,7 @@
         <span class="eyebrow" style="color:var(--accent)">🎁 Pack completo</span>
         <h2>El Pack PawLove: los 3, con −30%</h2>
         <p style="color:rgba(251,239,226,.78);max-width:46ch">Recogedor portátil + correa retráctil + cinturón de seguridad. Todo lo que necesitas para pasear y viajar con tu mascota, a un precio irresistible.</p>
-        <a href="{{ coll }}" class="btn btn--primary btn--lg" style="margin-top:22px">Quiero el pack 🐾</a>
+        <button onclick="buyPack(this)" class="btn btn--primary btn--lg" style="margin-top:22px">Quiero el pack 🐾</button>
       </div>
       <div class="bundle__price">
         <div class="bundle__was">€82,85</div>
@@ -219,6 +219,31 @@
 <div class="toast" id="pl-toast">🛒 <span>Añadido</span></div>
 
 <script>
+function buyPack(btn){
+  btn.textContent = 'Procesando...';
+  btn.disabled = true;
+  /* Los 3 productos del pack — primera variante disponible de cada uno */
+  var items = [
+    {id: 54076744270166, quantity: 1},  /* Recogedor con Linterna LED */
+    {id: 54076744368470, quantity: 1},  /* Correa Retráctil 3m */
+    {id: 54076745023830, quantity: 1}   /* Cinturón de Seguridad */
+  ];
+  fetch('/cart/clear.js', {method:'POST'})
+    .then(function(){
+      return fetch('/cart/add.js',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({items:items})
+      });
+    })
+    .then(function(){ window.location.href='/checkout?discount=PAWLOVE10'; })
+    .catch(function(){
+      btn.textContent='Quiero el pack 🐾';
+      btn.disabled=false;
+      alert('Error al añadir el pack. Inténtalo de nuevo.');
+    });
+}
+
 function buyNow(handle, el){
   var btn = el.querySelector('button');
   if(btn){ btn.textContent = 'Procesando...'; btn.disabled = true; }
