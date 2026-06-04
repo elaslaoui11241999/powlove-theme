@@ -42,64 +42,42 @@
       {% form 'product', product %}
         {%- assign current = product.selected_or_first_available_variant -%}
 
-        {%- comment -%} ===== Option selectors — v4 definitivo ===== {%- endcomment -%}
+        {%- comment -%} ===== Option selectors v6 ===== {%- endcomment -%}
         {%- if product.variants.size > 1 -%}
+          {%- assign _n_opts = product.options.size -%}
           <div class="opts-selector">
-            {%- for option in product.options_with_values -%}
-              {%- assign oi  = forloop.index0 -%}
-              {%- assign _ov = current.options[oi] -%}
+            {%- for oi in (0.._n_opts) -%}
+              {%- if oi >= _n_opts -%}{%- break -%}{%- endif -%}
 
-              {%- comment -%}
-                NOMBRE — 4 intentos en cascada:
-                1. option.name de options_with_values
-                2. product.options[oi] (puede ser string u Option object)
-                3. product.options[oi].name por si es objeto
-                4. Fallback por posición (oi==0→Color, oi==1→Tamaño)
-              {%- endcomment -%}
-              {%- assign _on = option.name -%}
-              {%- if _on == blank -%}{%- assign _on = product.options[oi] -%}{%- endif -%}
-              {%- if _on == blank -%}{%- assign _on = product.options[oi].name -%}{%- endif -%}
+              {%- comment -%} NOMBRE: object.name o string, con fallback por posición {%- endcomment -%}
+              {%- assign _on = product.options[oi].name | default: product.options[oi] -%}
               {%- if _on == blank -%}
                 {%- if oi == 0 -%}{%- assign _on = 'Color' -%}
                 {%- elsif oi == 1 -%}{%- assign _on = 'Tamaño' -%}
-                {%- else -%}{%- assign _on = 'Opción' -%}
-                {%- endif -%}
-              {%- endif -%}
-              {%- assign _ol = _on | downcase -%}
-
-              {%- comment -%}
-                TIPO — es Color si:
-                  - nombre contiene "color" o "colour"
-                  - O es la primera opción (oi==0) y los valores NO son tallas típicas
-                Es Tamaño si nombre contiene "tama" o "size" o "talla", o oi==1
-              {%- endcomment -%}
-              {%- assign _is_color = false -%}
-              {%- assign _is_size  = false -%}
-              {%- if _ol contains 'color' or _ol contains 'colour' -%}
-                {%- assign _is_color = true -%}
-              {%- elsif _ol contains 'tama' or _ol contains 'size' or _ol contains 'talla' -%}
-                {%- assign _is_size = true -%}
-              {%- elsif oi == 0 -%}
-                {%- assign _is_color = true -%}
-              {%- else -%}
-                {%- assign _is_size = true -%}
+                {%- else -%}{%- assign _on = 'Opción' -%}{%- endif -%}
               {%- endif -%}
 
-              {%- comment -%}
-                VALORES — option.values si disponible, fallback de variantes.
-              {%- endcomment -%}
-              {%- assign _vals = option.values -%}
+              {%- comment -%} VALORES: directo de options_with_values[oi] (todos los valores definidos) {%- endcomment -%}
+              {%- assign _vals = product.options_with_values[oi].values -%}
               {%- if _vals == blank or _vals.size == 0 -%}
-                {%- assign _vals = '' | split: '__' -%}
-                {%- assign _vs   = '' -%}
+                {%- comment -%} Fallback: extraer valores únicos de variantes {%- endcomment -%}
+                {%- assign _vals = '' | split: '|' -%}
+                {%- assign _vseen = '' -%}
                 {%- for v in product.variants -%}
                   {%- assign _vv = v.options[oi] -%}
-                  {%- assign _ck = '__' | append: _vv | append: '__' -%}
-                  {%- unless _vs contains _ck -%}
+                  {%- assign _ck = '|' | append: _vv | append: '|' -%}
+                  {%- unless _vseen contains _ck -%}
                     {%- assign _vals = _vals | push: _vv -%}
-                    {%- assign _vs   = _vs | append: _ck -%}
+                    {%- assign _vseen = _vseen | append: _ck -%}
                   {%- endunless -%}
                 {%- endfor -%}
+              {%- endif -%}
+
+              {%- assign _ov = current.options[oi] -%}
+              {%- assign _ol = _on | downcase -%}
+              {%- assign _is_color = false -%}
+              {%- if _ol contains 'color' or _ol contains 'colour' or oi == 0 -%}
+                {%- assign _is_color = true -%}
               {%- endif -%}
 
               <div class="opt-group">
@@ -108,12 +86,11 @@
                 {%- if _is_color -%}
                   <div class="opt-swatches">
                     {%- for val in _vals -%}
+                      {%- comment -%} Busca imagen de la primera variante con este valor {%- endcomment -%}
                       {%- assign _img = blank -%}
-                      {%- assign _fc  = 0 -%}
                       {%- for v in product.variants -%}
-                        {%- if v.options[oi] == val and _fc == 0 -%}
+                        {%- if v.options[oi] == val and _img == blank -%}
                           {%- assign _img = v.image -%}
-                          {%- assign _fc  = 1 -%}
                         {%- endif -%}
                       {%- endfor -%}
                       <button type="button"
