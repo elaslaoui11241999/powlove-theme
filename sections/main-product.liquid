@@ -50,22 +50,46 @@
               {%- assign _ov = current.options[oi] -%}
 
               {%- comment -%}
-                Nombre: options_with_values[i].name es lo más fiable.
-                Fallback: product.options[i] (puede ser string u objeto).
+                NOMBRE — 4 intentos en cascada:
+                1. option.name de options_with_values
+                2. product.options[oi] (puede ser string u Option object)
+                3. product.options[oi].name por si es objeto
+                4. Fallback por posición (oi==0→Color, oi==1→Tamaño)
               {%- endcomment -%}
               {%- assign _on = option.name -%}
+              {%- if _on == blank -%}{%- assign _on = product.options[oi] -%}{%- endif -%}
+              {%- if _on == blank -%}{%- assign _on = product.options[oi].name -%}{%- endif -%}
               {%- if _on == blank -%}
-                {%- assign _on_raw = product.options[oi] -%}
-                {%- assign _on = _on_raw.name | default: _on_raw -%}
+                {%- if oi == 0 -%}{%- assign _on = 'Color' -%}
+                {%- elsif oi == 1 -%}{%- assign _on = 'Tamaño' -%}
+                {%- else -%}{%- assign _on = 'Opción' -%}
+                {%- endif -%}
               {%- endif -%}
               {%- assign _ol = _on | downcase -%}
 
               {%- comment -%}
-                Valores: option.values de options_with_values.
-                Fallback: extraer valores únicos de las variantes.
+                TIPO — es Color si:
+                  - nombre contiene "color" o "colour"
+                  - O es la primera opción (oi==0) y los valores NO son tallas típicas
+                Es Tamaño si nombre contiene "tama" o "size" o "talla", o oi==1
+              {%- endcomment -%}
+              {%- assign _is_color = false -%}
+              {%- assign _is_size  = false -%}
+              {%- if _ol contains 'color' or _ol contains 'colour' -%}
+                {%- assign _is_color = true -%}
+              {%- elsif _ol contains 'tama' or _ol contains 'size' or _ol contains 'talla' -%}
+                {%- assign _is_size = true -%}
+              {%- elsif oi == 0 -%}
+                {%- assign _is_color = true -%}
+              {%- else -%}
+                {%- assign _is_size = true -%}
+              {%- endif -%}
+
+              {%- comment -%}
+                VALORES — option.values si disponible, fallback de variantes.
               {%- endcomment -%}
               {%- assign _vals = option.values -%}
-              {%- if _vals.size == 0 -%}
+              {%- if _vals == blank or _vals.size == 0 -%}
                 {%- assign _vals = '' | split: '__' -%}
                 {%- assign _vs   = '' -%}
                 {%- for v in product.variants -%}
@@ -81,7 +105,7 @@
               <div class="opt-group">
                 <div class="opt-label">{{ _on }}:&nbsp;<strong data-opt-selected="{{ oi }}">{{ _ov }}</strong></div>
 
-                {%- if _ol == 'color' -%}
+                {%- if _is_color -%}
                   <div class="opt-swatches">
                     {%- for val in _vals -%}
                       {%- assign _img = blank -%}
