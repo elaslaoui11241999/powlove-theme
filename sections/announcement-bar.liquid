@@ -1,13 +1,27 @@
-<div class="announcement">
-  <div class="announcement__track" aria-hidden="true">
+<style>
+.ann-bar{background:#2A1B12;overflow:hidden;height:36px;display:flex;align-items:center}
+.ann-bar__track{display:flex;white-space:nowrap;animation:ann-marquee 32s linear infinite}
+.ann-bar__track ul{display:inline-flex;gap:0;margin:0;padding:0;list-style:none}
+.ann-bar__track li{display:inline-flex;align-items:center;font-family:'Fredoka',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(251,239,226,.75);padding:0 20px;gap:8px}
+.ann-bar__track li b{color:#E8702A;font-weight:700}
+.ann-bar__track li::before{content:'🐾';font-size:.78rem;opacity:.6}
+@keyframes ann-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+
+<div class="ann-bar" role="marquee" aria-label="Anuncios">
+  <div class="ann-bar__track" aria-hidden="true">
     <ul>
-      {%- for block in section.blocks -%}
-        <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
-      {%- endfor -%}
-      {%- comment -%} duplicate for seamless marquee {%- endcomment -%}
-      {%- for block in section.blocks -%}
-        <li>{{ block.settings.text }}</li>
-      {%- endfor -%}
+      <li>Env&#237;o gratis en pedidos +<b>40&#8364;</b></li>
+      <li>Entrega <b>8&#8211;18 d&#237;as</b> &middot; Ecoscooting + Correos</li>
+      <li>Devoluci&#243;n <b>30 d&#237;as</b> gratis</li>
+      <li>+<b>5.000</b> mascotas felices</li>
+      <li>C&#243;digo <b>PAWLOVE10</b></li>
+      {%- comment -%} Duplicado para marquee continuo {%- endcomment -%}
+      <li>Env&#237;o gratis en pedidos +<b>40&#8364;</b></li>
+      <li>Entrega <b>8&#8211;18 d&#237;as</b> &middot; Ecoscooting + Correos</li>
+      <li>Devoluci&#243;n <b>30 d&#237;as</b> gratis</li>
+      <li>+<b>5.000</b> mascotas felices</li>
+      <li>C&#243;digo <b>PAWLOVE10</b></li>
     </ul>
   </div>
 </div>
@@ -15,26 +29,7 @@
 {% schema %}
 {
   "name": "Barra de anuncios",
-  "max_blocks": 8,
-  "blocks": [
-    {
-      "type": "message",
-      "name": "Mensaje",
-      "settings": [
-        { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Envío gratis en pedidos +<b>40€</b></p>" }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Barra de anuncios",
-      "blocks": [
-        { "type": "message", "settings": { "text": "<p>Envío gratis en pedidos +<b>40€</b></p>" } },
-        { "type": "message", "settings": { "text": "<p>Entrega <b>8-18 días</b> · Ecoscooting + Correos</p>" } },
-        { "type": "message", "settings": { "text": "<p>Devolución <b>30 días</b> gratis</p>" } },
-        { "type": "message", "settings": { "text": "<p>Código <b>PAWLOVE10</b></p>" } }
-      ]
-    }
-  ]
+  "settings": [],
+  "presets": [{ "name": "Barra de anuncios" }]
 }
 {% endschema %}

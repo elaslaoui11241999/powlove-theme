@@ -1,38 +1,98 @@
-<header class="header">
-  <div class="header__inner">
-    <a href="{{ routes.root_url }}" class="header__logo">
-      {%- if settings.logo != blank -%}
-        <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" style="max-height:38px;width:auto;">
-      {%- else -%}
-        🐾 {{ settings.logo_text | default: shop.name }}
-      {%- endif -%}
+<style>
+.pw-header{position:sticky;top:0;z-index:100;background:rgba(253,250,245,.97);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(42,27,18,.08)}
+.pw-header__inner{max-width:1200px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:16px}
+/* Logo */
+.pw-header__logo{font-family:'Fredoka',sans-serif;font-size:1.45rem;font-weight:700;color:#2A1B12;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0}
+.pw-header__logo em{color:#E8702A;font-style:normal}
+.pw-header__logo .paw{font-size:1.1rem;animation:pw-wag 3s ease-in-out infinite;display:inline-block}
+@keyframes pw-wag{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg)}}
+/* Nav desktop */
+.pw-header__nav{display:flex;gap:24px;margin:0 auto}
+.pw-header__nav a{font-family:'Fredoka',sans-serif;font-weight:600;font-size:1rem;color:#2A1B12;text-decoration:none;transition:color .15s}
+.pw-header__nav a:hover{color:#E8702A}
+@media(max-width:860px){.pw-header__nav{display:none}}
+/* Actions */
+.pw-header__actions{display:flex;align-items:center;gap:6px;margin-left:auto}
+.pw-hbtn{width:40px;height:40px;border-radius:10px;background:transparent;border:none;display:flex;align-items:center;justify-content:center;color:#2A1B12;cursor:pointer;transition:background .15s;position:relative;text-decoration:none;flex-shrink:0}
+.pw-hbtn:hover{background:rgba(42,27,18,.07)}
+.pw-hbtn svg{width:20px;height:20px;stroke:#2A1B12;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:block}
+.pw-hbtn__badge{position:absolute;top:5px;right:5px;background:#E8702A;color:#fff;font-family:'Fredoka',sans-serif;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;line-height:1}
+/* Mobile menu */
+.pw-mob-nav{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(253,250,245,.98);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(42,27,18,.1);z-index:99;flex-direction:column;padding:8px 0}
+.pw-mob-nav.open{display:flex}
+.pw-mob-nav a{padding:14px 24px;font-family:'Fredoka',sans-serif;font-size:1.05rem;font-weight:600;color:#2A1B12;text-decoration:none;border-bottom:1px solid rgba(42,27,18,.05)}
+.pw-mob-nav a:hover{color:#E8702A}
+</style>
+
+<div class="pw-mob-nav" id="pw-mob-nav">
+  <a href="{{ routes.root_url }}">Inicio</a>
+  <a href="{{ routes.all_products_collection_url }}">Productos</a>
+  <a href="/pages/sobre-nosotros">Sobre Nosotros</a>
+  <a href="/pages/contacto">Contacto</a>
+</div>
+
+<header class="pw-header">
+  <div class="pw-header__inner">
+
+    <!-- Logo -->
+    <a href="{{ routes.root_url }}" class="pw-header__logo">
+      <span class="paw">&#x1F43E;</span>pow<em>love</em>
     </a>
 
-    <nav class="header__nav" role="navigation">
-      {%- for link in linklists[section.settings.menu].links -%}
-        <a href="{{ link.url }}">{{ link.title }}</a>
-      {%- else -%}
-        <a href="{{ routes.root_url }}">Inicio</a>
-        <a href="{{ routes.all_products_collection_url }}">Productos</a>
-        <a href="{{ routes.search_url }}">Buscar</a>
-      {%- endfor -%}
+    <!-- Nav desktop -->
+    <nav class="pw-header__nav" role="navigation">
+      <a href="{{ routes.root_url }}">Inicio</a>
+      <a href="{{ routes.all_products_collection_url }}">Productos</a>
+      <a href="/pages/sobre-nosotros">Sobre Nosotros</a>
+      <a href="/pages/contacto">Contacto</a>
     </nav>
 
-    <div class="header__actions">
-      <a href="{{ routes.search_url }}" aria-label="Buscar" class="cart-link">🔍</a>
-      <a href="{{ routes.cart_url }}" class="cart-link" aria-label="{{ 'accessibility.cart' | t }}">
-        🛒 <span class="count">{{ cart.item_count }}</span>
+    <!-- Acciones -->
+    <div class="pw-header__actions">
+
+      <!-- Búsqueda -->
+      <a href="{{ routes.search_url }}" class="pw-hbtn" aria-label="Buscar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </a>
-      <button class="nav-toggle" data-nav-toggle aria-label="{{ 'accessibility.menu' | t }}">☰</button>
+
+      <!-- Carrito -->
+      <a href="{{ routes.cart_url }}" class="pw-hbtn" aria-label="Carrito">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        {%- if cart.item_count > 0 -%}
+          <span class="pw-hbtn__badge">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+
+      <!-- Hamburguesa -->
+      <button class="pw-hbtn" id="pw-ham-btn" aria-label="Menú" aria-expanded="false" onclick="pwToggleMob()">
+        <svg id="pw-ham-icon" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
     </div>
   </div>
 </header>
 
+<script>
+function pwToggleMob(){
+  var nav = document.getElementById('pw-mob-nav');
+  var btn = document.getElementById('pw-ham-btn');
+  var isOpen = nav.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+}
+document.addEventListener('click', function(e){
+  var nav = document.getElementById('pw-mob-nav');
+  var btn = document.getElementById('pw-ham-btn');
+  if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+});
+</script>
+
 {% schema %}
 {
   "name": "Encabezado",
-  "settings": [
-    { "type": "link_list", "id": "menu", "label": "Menú", "default": "main-menu" }
-  ]
+  "settings": [],
+  "presets": [{ "name": "Encabezado" }]
 }
 {% endschema %}
