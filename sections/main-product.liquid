@@ -45,7 +45,7 @@
         {%- comment -%} ===== Option selectors (color swatches + size buttons) ===== {%- endcomment -%}
         {%- if product.variants.size > 1 -%}
           <div class="opts-selector">
-            {%- for option in product.options -%}
+            {%- for option in product.options_with_values -%}
               {%- assign opt_idx = forloop.index0 -%}
               {%- assign selected_val = current.options[opt_idx] -%}
               {%- assign opt_lower = option.name | downcase -%}
