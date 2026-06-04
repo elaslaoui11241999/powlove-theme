@@ -42,33 +42,51 @@
       {% form 'product', product %}
         {%- assign current = product.selected_or_first_available_variant -%}
 
-        {%- comment -%} ===== Option selectors (color swatches + size buttons) ===== {%- endcomment -%}
+        {%- comment -%}
+          ===== Option selectors =====
+          Enfoque fiable: product.options[oi] para nombres (siempre strings),
+          valores derivados de product.variants (funciona en cualquier versión).
+        {%- endcomment -%}
         {%- if product.variants.size > 1 -%}
+          {%- assign _opts_count = product.options.size | minus: 1 -%}
           <div class="opts-selector">
-            {%- for option in product.options_with_values -%}
-              {%- assign opt_idx = forloop.index0 -%}
-              {%- assign selected_val = current.options[opt_idx] -%}
-              {%- assign opt_lower = option.name | downcase -%}
+            {%- for oi in (0.._opts_count) -%}
+              {%- assign _oname = product.options[oi] -%}
+              {%- assign _oval  = current.options[oi] -%}
+              {%- assign _olow  = _oname | downcase -%}
+
+              {%- comment -%} Valores únicos de esta opción, en orden de aparición en variantes {%- endcomment -%}
+              {%- assign _uv   = '' | split: ',' -%}
+              {%- assign _seen = '' -%}
+              {%- for v in product.variants -%}
+                {%- assign _vv  = v.options[oi] -%}
+                {%- assign _chk = '__' | append: _vv | append: '__' -%}
+                {%- unless _seen contains _chk -%}
+                  {%- assign _uv   = _uv | push: _vv -%}
+                  {%- assign _seen = _seen | append: _chk -%}
+                {%- endunless -%}
+              {%- endfor -%}
+
               <div class="opt-group">
                 <div class="opt-label">
-                  {{ option.name }}:&nbsp;<strong data-opt-selected="{{ opt_idx }}">{{ selected_val }}</strong>
+                  {{ _oname }}:&nbsp;<strong data-opt-selected="{{ oi }}">{{ _oval }}</strong>
                 </div>
-                {%- if opt_lower == 'color' -%}
+
+                {%- if _olow == 'color' -%}
                   <div class="opt-swatches">
-                    {%- for val in option.values -%}
-                      {%- comment -%} Busca la primera variante con este color para usar su foto {%- endcomment -%}
+                    {%- for val in _uv -%}
                       {%- assign _img = blank -%}
-                      {%- assign _found = 0 -%}
+                      {%- assign _fc  = 0 -%}
                       {%- for v in product.variants -%}
-                        {%- if v.options[opt_idx] == val and _found == 0 -%}
+                        {%- if v.options[oi] == val and _fc == 0 -%}
                           {%- assign _img = v.image -%}
-                          {%- assign _found = 1 -%}
+                          {%- assign _fc  = 1 -%}
                         {%- endif -%}
                       {%- endfor -%}
                       <button type="button"
-                        class="opt-swatch {% if val == selected_val %}is-active{% endif %}"
+                        class="opt-swatch {% if val == _oval %}is-active{% endif %}"
                         data-opt-val="{{ val }}"
-                        data-opt-idx="{{ opt_idx }}"
+                        data-opt-idx="{{ oi }}"
                         title="{{ val }}">
                         {%- if _img -%}
                           <img src="{{ _img | image_url: width: 80, height: 80, crop: 'center' }}" alt="{{ val }}" loading="lazy">
@@ -80,11 +98,11 @@
                   </div>
                 {%- else -%}
                   <div class="opt-btns">
-                    {%- for val in option.values -%}
+                    {%- for val in _uv -%}
                       <button type="button"
-                        class="opt-btn {% if val == selected_val %}is-active{% endif %}"
+                        class="opt-btn {% if val == _oval %}is-active{% endif %}"
                         data-opt-val="{{ val }}"
-                        data-opt-idx="{{ opt_idx }}">
+                        data-opt-idx="{{ oi }}">
                         {{ val }}
                       </button>
                     {%- endfor -%}
