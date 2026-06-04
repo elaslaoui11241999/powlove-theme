@@ -2,7 +2,8 @@
 <a href="{{ product.url }}" class="card">
   <div class="card__media">
     {%- if product.compare_at_price > product.price -%}
-      <span class="card__flag">Oferta</span>
+      {%- assign pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+      <span class="card__flag">−{{ pct }}%</span>
     {%- endif -%}
     {%- if product.featured_image -%}
       <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | escape | default: product.title }}" loading="lazy" width="500" height="500">
@@ -19,6 +20,6 @@
       {%- endif -%}
       {{ product.price | money }}
     </span>
-    <span class="card__cta btn btn--ghost">Ver producto 🐾</span>
+    <span class="card__cta btn btn--primary btn--block">Comprar ahora 🐾</span>
   </div>
 </a>
