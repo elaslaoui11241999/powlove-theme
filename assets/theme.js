@@ -242,16 +242,24 @@
         var vid = buy.getAttribute('data-card-buy');
         var action = buy.closest('.card__action') || buy.closest('.pcard__action');
         var numEl = action ? action.querySelector('[data-card-num]') : null;
-        var qty = parseInt(numEl ? numEl.textContent : '1') || 1;
+        /* qty del selector de la tarjeta — siempre empieza en 1 en el HTML */
+        var qty = Math.max(1, parseInt(numEl ? numEl.textContent : '1') || 1);
         var orig = buy.textContent;
         buy.textContent = 'Procesando...'; buy.disabled = true;
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: parseInt(vid), quantity: qty })
-        })
-        .then(function () { window.location.href = '/checkout'; })
-        .catch(function () { buy.textContent = orig; buy.disabled = false; });
+        /* Limpiar carrito antes de añadir para evitar cantidades residuales */
+        fetch('/cart/clear.js', { method: 'POST' })
+          .then(function () {
+            return fetch('/cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: parseInt(vid), quantity: qty })
+            });
+          })
+          .then(function () {
+            if (numEl) numEl.textContent = '1'; /* reset visual del selector */
+            window.location.href = '/checkout';
+          })
+          .catch(function () { buy.textContent = orig; buy.disabled = false; });
       }
     });
   }
