@@ -1,25 +1,38 @@
 {%- comment -%} Product card. Param: product {%- endcomment -%}
-<a href="{{ product.url }}" class="card">
-  <div class="card__media">
-    {%- if product.compare_at_price > product.price -%}
-      {%- assign pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
-      <span class="card__flag">−{{ pct }}%</span>
-    {%- endif -%}
-    {%- if product.featured_image -%}
-      <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | escape | default: product.title }}" loading="lazy" width="500" height="500">
-    {%- else -%}
-      {% render 'media-placeholder', uid: product.id, label: 'foto producto' %}
-    {%- endif -%}
-  </div>
-  <div class="card__body">
-    {% render 'stars', rating: 5 %}
-    <span class="card__title">{{ product.title }}</span>
-    <span class="card__price">
+{%- assign vid = product.selected_or_first_available_variant.id -%}
+<div class="card">
+  <a href="{{ product.url }}" class="card__link" tabindex="0" aria-label="{{ product.title | escape }}">
+    <div class="card__media">
       {%- if product.compare_at_price > product.price -%}
-        <del>{{ product.compare_at_price | money }}</del>
+        {%- assign pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+        <span class="card__flag">−{{ pct }}%</span>
       {%- endif -%}
-      {{ product.price | money }}
-    </span>
-    <span class="card__cta btn btn--primary btn--block">Comprar ahora 🐾</span>
+      {%- if product.featured_image -%}
+        <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | escape | default: product.title }}" loading="lazy" width="500" height="500">
+      {%- else -%}
+        {% render 'media-placeholder', uid: product.id, label: 'foto producto' %}
+      {%- endif -%}
+    </div>
+    <div class="card__body">
+      {% render 'stars', rating: 5 %}
+      <span class="card__title">{{ product.title }}</span>
+      <span class="card__price">
+        {%- if product.compare_at_price > product.price -%}
+          <del>{{ product.compare_at_price | money }}</del>
+        {%- endif -%}
+        {{ product.price | money }}
+      </span>
+    </div>
+  </a>
+  <div class="card__action">
+    <div class="card__qty" data-card-qty>
+      <button type="button" data-card-minus aria-label="Menos">−</button>
+      <span data-card-num>1</span>
+      <button type="button" data-card-plus aria-label="Más">+</button>
+    </div>
+    <button type="button" class="btn btn--primary btn--block card__buy-btn"
+      data-card-buy="{{ vid }}">
+      Comprar ahora 🐾
+    </button>
   </div>
-</a>
+</div>

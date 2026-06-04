@@ -219,6 +219,43 @@
     });
   }
 
+  /* ===== Card buy-now (colecciones) ===== */
+  function initCardBuy() {
+    document.addEventListener('click', function (e) {
+      var minus = e.target.closest('[data-card-minus]');
+      if (minus) {
+        e.preventDefault(); e.stopPropagation();
+        var num = minus.closest('[data-card-qty]').querySelector('[data-card-num]');
+        num.textContent = Math.max(1, parseInt(num.textContent || '1') - 1);
+        return;
+      }
+      var plus = e.target.closest('[data-card-plus]');
+      if (plus) {
+        e.preventDefault(); e.stopPropagation();
+        var num = plus.closest('[data-card-qty]').querySelector('[data-card-num]');
+        num.textContent = parseInt(num.textContent || '1') + 1;
+        return;
+      }
+      var buy = e.target.closest('[data-card-buy]');
+      if (buy) {
+        e.preventDefault(); e.stopPropagation();
+        var vid = buy.getAttribute('data-card-buy');
+        var action = buy.closest('.card__action') || buy.closest('.pcard__action');
+        var numEl = action ? action.querySelector('[data-card-num]') : null;
+        var qty = parseInt(numEl ? numEl.textContent : '1') || 1;
+        var orig = buy.textContent;
+        buy.textContent = 'Procesando...'; buy.disabled = true;
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: parseInt(vid), quantity: qty })
+        })
+        .then(function () { window.location.href = '/checkout'; })
+        .catch(function () { buy.textContent = orig; buy.disabled = false; });
+      }
+    });
+  }
+
   /* ===== Scroll reveal ===== */
   function initReveal() {
     var els = document.querySelectorAll('.reveal');
@@ -232,6 +269,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     initProduct();
+    initCardBuy();
     initCountdown();
     initAccordions();
     initViewers();
