@@ -6,8 +6,8 @@
 
   <div class="facets">
     <div>{{ collection.products_count }} {% if collection.products_count == 1 %}producto{% else %}productos{% endif %}</div>
-    {% form 'collection_sort' %}
-      <select name="sort_by" onchange="this.form.submit()" aria-label="{{ 'products.facets.sort_by_label' | t }}">
+    <form method="get" action="{{ request.path }}">
+      <select name="sort_by" onchange="this.form.submit()" aria-label="Ordenar por">
         {%- assign sort = collection.sort_by | default: collection.default_sort_by -%}
         <option value="manual" {% if sort == 'manual' %}selected{% endif %}>Destacados</option>
         <option value="price-ascending" {% if sort == 'price-ascending' %}selected{% endif %}>Precio: bajo a alto</option>
@@ -15,7 +15,7 @@
         <option value="created-descending" {% if sort == 'created-descending' %}selected{% endif %}>Más nuevos</option>
         <option value="best-selling" {% if sort == 'best-selling' %}selected{% endif %}>Más vendidos</option>
       </select>
-    {% endform %}
+    </form>
   </div>
 
   <div class="product-grid" style="padding-bottom:64px;">
