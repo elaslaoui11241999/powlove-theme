@@ -1,63 +1,88 @@
-<footer class="footer">
-  <div class="page-width">
-    <div class="footer__grid">
-      <div class="footer__brand">
-        <a href="{{ routes.root_url }}" class="header__logo" style="margin-bottom:14px;">🐾 {{ settings.logo_text | default: shop.name }}</a>
-        <p>{{ section.settings.tagline }}</p>
-        <div style="display:flex;gap:12px;margin-top:16px;">
-          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" class="cart-link" aria-label="Instagram">Instagram</a>{%- endif -%}
-          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" class="cart-link" aria-label="TikTok">TikTok</a>{%- endif -%}
-          {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" class="cart-link" aria-label="Facebook">Facebook</a>{%- endif -%}
-        </div>
+<style>
+.pw-footer{background:#2A1B12;color:#FBEFE2;padding:56px 0 28px;font-family:'Nunito',sans-serif}
+.pw-footer__inner{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:40px;align-items:start}
+@media(max-width:900px){.pw-footer__inner{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:520px){.pw-footer__inner{grid-template-columns:1fr}}
+.pw-footer__logo{font-family:'Fredoka',sans-serif;font-size:1.6rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;margin-bottom:12px;text-decoration:none}
+.pw-footer__logo em{color:#E8702A;font-style:normal}
+.pw-footer__tagline{font-size:.93rem;color:rgba(251,239,226,.6);line-height:1.7;max-width:32ch;margin:0 0 18px}
+.pw-footer__soc{display:flex;gap:10px;flex-wrap:wrap}
+.pw-footer__soc a{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(251,239,226,.5);transition:all .2s;text-decoration:none}
+.pw-footer__soc a:hover{background:#E8702A;color:#fff;border-color:#E8702A}
+.pw-footer__soc svg{width:17px;height:17px;display:block}
+.pw-footer__col h4{font-family:'Fredoka',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#E8702A;margin:0 0 14px}
+.pw-footer__col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.pw-footer__col a{font-size:.92rem;color:rgba(251,239,226,.55);text-decoration:none;transition:color .15s}
+.pw-footer__col a:hover{color:#E8702A}
+.pw-footer__bottom{max-width:1200px;margin:36px auto 0;padding:20px 24px 0;border-top:1px solid rgba(255,255,255,.09);text-align:center;font-size:.84rem;color:rgba(251,239,226,.3)}
+</style>
+
+<footer class="pw-footer">
+  <div class="pw-footer__inner">
+
+    <!-- Marca -->
+    <div>
+      <a href="{{ routes.root_url }}" class="pw-footer__logo">
+        &#x1F43E;&nbsp;pow<em>love</em>
+      </a>
+      <p class="pw-footer__tagline">La tienda de confianza para los que aman a sus mascotas. Productos de calidad, precios justos y mucho amor.</p>
+      <div class="pw-footer__soc">
+        <a href="https://www.instagram.com/powl.oveaimales/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@pow.love6" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+        <a href="https://wa.me/34682238049" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+        <a href="mailto:powlove.animales@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        </a>
       </div>
-
-      {%- for block in section.blocks -%}
-        <div {{ block.shopify_attributes }}>
-          <h4>{{ block.settings.heading }}</h4>
-          <ul>
-            {%- for link in linklists[block.settings.menu].links -%}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {%- else -%}
-              <li><a href="{{ routes.root_url }}">Inicio</a></li>
-              <li><a href="{{ routes.all_products_collection_url }}">Productos</a></li>
-            {%- endfor -%}
-          </ul>
-        </div>
-      {%- endfor -%}
     </div>
 
-    <div class="footer__bottom">
-      © {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'sections.footer.copyright' | t }} 🐾 Hecho con amor
+    <!-- TIENDA -->
+    <div class="pw-footer__col">
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="{{ routes.root_url }}">Inicio</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Productos</a></li>
+        <li><a href="/pages/sobre-nosotros">Sobre Nosotros</a></li>
+      </ul>
     </div>
+
+    <!-- AYUDA -->
+    <div class="pw-footer__col">
+      <h4>Ayuda</h4>
+      <ul>
+        <li><a href="/pages/envios">Env&#237;os</a></li>
+        <li><a href="/pages/contacto">Contacto</a></li>
+        <li><a href="/pages/devoluciones">Devoluciones</a></li>
+      </ul>
+    </div>
+
+    <!-- LEGAL -->
+    <div class="pw-footer__col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/pages/privacidad">Privacidad</a></li>
+        <li><a href="/pages/terminos">T&#233;rminos</a></li>
+        <li><a href="/pages/aviso-legal">Aviso Legal</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="pw-footer__bottom">
+    &copy; {{ 'now' | date: '%Y' }} powlove &#x1F43E; &mdash; Hecho con amor para tus mascotas
   </div>
 </footer>
 
 {% schema %}
 {
   "name": "Pie de página",
-  "settings": [
-    { "type": "textarea", "id": "tagline", "label": "Descripción", "default": "La tienda de confianza para los que aman a sus mascotas. Productos de calidad, precios justos y mucho amor." }
-  ],
-  "max_blocks": 3,
-  "blocks": [
-    {
-      "type": "menu",
-      "name": "Columna de menú",
-      "settings": [
-        { "type": "text", "id": "heading", "label": "Título", "default": "Tienda" },
-        { "type": "link_list", "id": "menu", "label": "Menú" }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Pie de página",
-      "blocks": [
-        { "type": "menu", "settings": { "heading": "Tienda" } },
-        { "type": "menu", "settings": { "heading": "Ayuda" } },
-        { "type": "menu", "settings": { "heading": "Legal" } }
-      ]
-    }
-  ]
+  "settings": [],
+  "presets": [{ "name": "Pie de página" }]
 }
 {% endschema %}
