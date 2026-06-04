@@ -56,29 +56,25 @@
                 {%- if opt_lower == 'color' -%}
                   <div class="opt-swatches">
                     {%- for val in option.values -%}
-                      {%- assign vl = val | downcase -%}
-                      {%- assign sw = '#C9B79C' -%}
-                      {%- if vl == 'azul' %}{% assign sw = '#2A6FB0' %}
-                      {%- elsif vl == 'azul grisáceo' or vl == 'azul grisaceo' %}{% assign sw = '#6B8FC7' %}
-                      {%- elsif vl == 'verde' %}{% assign sw = '#3E8E5A' %}
-                      {%- elsif vl == 'rosa' %}{% assign sw = '#E58CA8' %}
-                      {%- elsif vl == 'rosa grisáceo' or vl == 'rosa grisaceo' %}{% assign sw = '#C4A0A8' %}
-                      {%- elsif vl == 'rojo' %}{% assign sw = '#D0342C' %}
-                      {%- elsif vl == 'rojo grisáceo' or vl == 'rojo grisaceo' %}{% assign sw = '#C4706B' %}
-                      {%- elsif vl == 'blanco' %}{% assign sw = '#F0EAD6' %}
-                      {%- elsif vl == 'marrón' or vl == 'marron' %}{% assign sw = '#8B5E3C' %}
-                      {%- elsif vl == 'negro' or vl == 'negro grisáceo' or vl == 'negro grisaceo' %}{% assign sw = '#2A2A2A' %}
-                      {%- elsif vl == 'naranja' %}{% assign sw = '#E8702A' %}
-                      {%- elsif vl == 'amarillo' %}{% assign sw = '#F0A500' %}
-                      {%- elsif vl == 'azul cielo' %}{% assign sw = '#5BAFD6' %}
-                      {%- elsif vl == 'morado' or vl contains 'purpura' %}{% assign sw = '#7A4FB0' %}
-                      {%- endif -%}
+                      {%- comment -%} Busca la primera variante con este color para usar su foto {%- endcomment -%}
+                      {%- assign _img = blank -%}
+                      {%- assign _found = 0 -%}
+                      {%- for v in product.variants -%}
+                        {%- if v.options[opt_idx] == val and _found == 0 -%}
+                          {%- assign _img = v.image -%}
+                          {%- assign _found = 1 -%}
+                        {%- endif -%}
+                      {%- endfor -%}
                       <button type="button"
                         class="opt-swatch {% if val == selected_val %}is-active{% endif %}"
                         data-opt-val="{{ val }}"
                         data-opt-idx="{{ opt_idx }}"
-                        style="background:{{ sw }}"
                         title="{{ val }}">
+                        {%- if _img -%}
+                          <img src="{{ _img | image_url: width: 80, height: 80, crop: 'center' }}" alt="{{ val }}" loading="lazy">
+                        {%- else -%}
+                          <span class="opt-swatch__txt">{{ val | slice: 0, 2 }}</span>
+                        {%- endif -%}
                       </button>
                     {%- endfor -%}
                   </div>
