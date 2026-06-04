@@ -116,10 +116,14 @@
 </section>
 
 <!-- spotlight scooper -->
+{%- assign _srec = all_products['dog-poop-scooper-set-claw-waste-picker-with-leash-clip-poop-bag-dispenser-led-light-portable-hygienic-cleanup-tool-for-pet-dogs'] -%}
 <section class="section" id="scooper" style="background:var(--surface)">
   <div class="wrap">
     <div class="spot">
-      <div class="spot__media reveal"><span class="spot__badge">⚡ Oferta −33%</span><img src="{{ 'pl-scooper-hero.png' | asset_url }}" alt="Recogedor de caca portátil con linterna"></div>
+      <div class="spot__media reveal">
+        <span class="spot__badge">⚡ Oferta −33%</span>
+        <img id="sp-scooper-img" src="{{ 'pl-scooper-hero.png' | asset_url }}" alt="Recogedor de caca portátil con linterna">
+      </div>
       <div class="reveal">
         <span class="eyebrow">🪥 Paseos limpios</span>
         <h2>Recoge sin agacharte, <span class="accent">sin tocar nada</span></h2>
@@ -130,8 +134,6 @@
           <li><span class="fi">♻️</span> Dispensador de bolsas + 1 rollo de regalo</li>
           <li><span class="fi">🎒</span> Mosquetón y correa: cuélgalo donde quieras</li>
         </ul>
-        {%- comment -%} Fotos de variante para el selector de color del recogedor {%- endcomment -%}
-        {%- assign _srec = all_products['dog-poop-scooper-set-claw-waste-picker-with-leash-clip-poop-bag-dispenser-led-light-portable-hygienic-cleanup-tool-for-pet-dogs'] -%}
         <div class="colorrow">
           <span class="colorrow__lbl">Color</span>
           {%- assign _srec_seen = '' -%}
@@ -140,25 +142,39 @@
             {%- assign _sch = '|' | append: _sco | append: '|' -%}
             {%- unless _srec_seen contains _sch -%}
               {%- assign _srec_seen = _srec_seen | append: _sch -%}
-              <button class="copt copt--photo {% if forloop.first %}sel{% endif %}" data-c title="{{ _sco }}">
-                {%- if v.image -%}
-                  <img src="{{ v.image | image_url: width: 60, height: 60, crop: 'center' }}" alt="{{ _sco }}" loading="lazy">
-                {%- endif -%}
+              {%- assign _vbig = '' -%}
+              {%- if v.image -%}{%- assign _vbig = v.image | image_url: width: 900 -%}{%- endif -%}
+              <button class="copt copt--photo {% if forloop.first %}sel{% endif %}"
+                data-vid="{{ v.id }}"
+                data-img="{{ _vbig }}"
+                onclick="spColorClick(this,'scooper')"
+                title="{{ _sco }}">
+                {%- if v.image -%}<img src="{{ v.image | image_url: width: 60, height: 60, crop: 'center' }}" alt="{{ _sco }}" loading="lazy">{%- endif -%}
               </button>
             {%- endunless -%}
           {%- endfor -%}
         </div>
-        <div class="spot__buy"><div class="spot__price"><del>€29,95</del>€19,95</div><a href="/checkout" class="btn btn--primary btn--lg">Comprar ahora 🐾</a></div>
+        <div class="spot__buy">
+          <div class="spot__price"><del>€29,95</del>€19,95</div>
+          <button id="sp-scooper-buy" type="button" class="btn btn--primary btn--lg" onclick="spBuy('scooper')">Comprar ahora 🐾</button>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- spotlight correa -->
+{%- assign _scorr = all_products['3m-5m-dog-leash-strong-nylon-puppy-lead-for-small-medium-large-dogs-cats-automatic-retractable-durable-yorkshire-pet-supplies'] -%}
+<script type="application/json" id="sp-correa-data">
+[{%- for v in _scorr.variants -%}{"id":{{ v.id }},"col":{{ v.options[0] | json }},"sz":{{ v.options[1] | json }},"img":"{%- if v.image -%}{{ v.image | image_url: width: 900 }}{%- endif -%}"}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+</script>
 <section class="section" id="correa">
   <div class="wrap">
     <div class="spot spot--rev">
-      <div class="spot__media reveal"><span class="spot__badge">🔥 Más vendido</span><img src="{{ 'pl-leash-colors.png' | asset_url }}" alt="Correa retráctil en 8 colores"></div>
+      <div class="spot__media reveal">
+        <span class="spot__badge">🔥 Más vendido</span>
+        <img id="sp-correa-img" src="{{ 'pl-leash-colors.png' | asset_url }}" alt="Correa retráctil en 8 colores">
+      </div>
       <div class="reveal">
         <span class="eyebrow">🦮 Paseos sin tirones</span>
         <h2>La correa retráctil que <span class="accent">se adapta a ti</span></h2>
@@ -169,19 +185,46 @@
           <li><span class="fi">🎨</span> 8 colores para combinar con tu mascota</li>
           <li><span class="fi">📏</span> Elige 3 m o 5 m según tu paseo</li>
         </ul>
-        <div class="colorrow"><span class="colorrow__lbl">Color</span><button class="copt sel" style="background:#D0342C" data-c></button><button class="copt" style="background:#2A6FB0" data-c></button><button class="copt" style="background:#3FB4B1" data-c></button><button class="copt" style="background:#E58CA8" data-c></button><button class="copt" style="background:#7BB661" data-c></button><button class="copt" style="background:#2A1B12" data-c></button></div>
-        <div class="colorrow"><span class="colorrow__lbl">Tamaño</span><button class="copt sel" style="width:auto;padding:6px 16px;font-family:'Fredoka',sans-serif;font-weight:600;background:var(--surface)" data-s>3 m</button><button class="copt" style="width:auto;padding:6px 16px;font-family:'Fredoka',sans-serif;font-weight:600;background:var(--surface)" data-s>5 m</button></div>
-        <div class="spot__buy"><div class="spot__price"><del>€24,95</del>€16,95</div><a href="/checkout" class="btn btn--primary btn--lg">Comprar ahora 🐾</a></div>
+        <div class="colorrow">
+          <span class="colorrow__lbl">Color</span>
+          {%- assign _scorr_seen = '' -%}
+          {%- for v in _scorr.variants -%}
+            {%- assign _sco = v.options[0] -%}
+            {%- assign _sch = '|' | append: _sco | append: '|' -%}
+            {%- unless _scorr_seen contains _sch -%}
+              {%- assign _scorr_seen = _scorr_seen | append: _sch -%}
+              <button class="copt copt--photo {% if forloop.first %}sel{% endif %}"
+                data-col="{{ _sco }}"
+                onclick="spColorClick(this,'correa')"
+                title="{{ _sco }}">
+                {%- if v.image -%}<img src="{{ v.image | image_url: width: 60, height: 60, crop: 'center' }}" alt="{{ _sco }}" loading="lazy">{%- endif -%}
+              </button>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+        <div class="colorrow">
+          <span class="colorrow__lbl">Tamaño</span>
+          <button class="copt copt--sz sel" data-sz="3m" onclick="spSzClick(this)" style="width:auto;padding:6px 18px;font-family:'Fredoka',sans-serif;font-weight:600">3m</button>
+          <button class="copt copt--sz" data-sz="5m" onclick="spSzClick(this)" style="width:auto;padding:6px 18px;font-family:'Fredoka',sans-serif;font-weight:600">5m</button>
+        </div>
+        <div class="spot__buy">
+          <div class="spot__price"><del>€24,95</del>€16,95</div>
+          <button id="sp-correa-buy" type="button" class="btn btn--primary btn--lg" onclick="spBuy('correa')">Comprar ahora 🐾</button>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- spotlight cinturon -->
+{%- assign _scint = all_products['dog-leash-one-tow-two-dog-chains-one-tow-two-nylon-fashionable-and-convenient-safety-belt-rotatable-lock-head'] -%}
 <section class="section" id="cinturon" style="background:var(--surface)">
   <div class="wrap">
     <div class="spot">
-      <div class="spot__media reveal"><span class="spot__badge">🛡️ Viaje seguro</span><img src="{{ 'pl-seatbelt-hero.png' | asset_url }}" alt="Dos perros con cinturón de seguridad"></div>
+      <div class="spot__media reveal">
+        <span class="spot__badge">🛡️ Viaje seguro</span>
+        <img id="sp-cinturon-img" src="{{ 'pl-seatbelt-hero.png' | asset_url }}" alt="Dos perros con cinturón de seguridad">
+      </div>
       <div class="reveal">
         <span class="eyebrow">🚗 Seguridad en el coche</span>
         <h2>Que tu perro viaje <span class="accent">seguro, siempre</span></h2>
@@ -192,8 +235,30 @@
           <li><span class="fi">⚡</span> Hebilla de liberación rápida y bloqueo</li>
           <li><span class="fi">🐕‍🦺</span> 2 en 1: cinturón de coche + correa</li>
         </ul>
-        <div class="colorrow"><span class="colorrow__lbl">Color</span><button class="copt sel" style="background:#2A1B12" data-c></button><button class="copt" style="background:#E58CA8" data-c></button><button class="copt" style="background:#E8702A" data-c></button><button class="copt" style="background:#3FB4B1" data-c></button><button class="copt" style="background:#8E2434" data-c></button></div>
-        <div class="spot__buy"><div class="spot__price"><del>€27,95</del>€18,95</div><a href="/checkout" class="btn btn--primary btn--lg">Comprar ahora 🐾</a></div>
+        <div class="colorrow">
+          <span class="colorrow__lbl">Color</span>
+          {%- assign _scint_seen = '' -%}
+          {%- for v in _scint.variants -%}
+            {%- assign _sco = v.options[0] -%}
+            {%- assign _sch = '|' | append: _sco | append: '|' -%}
+            {%- unless _scint_seen contains _sch -%}
+              {%- assign _scint_seen = _scint_seen | append: _sch -%}
+              {%- assign _vbig = '' -%}
+              {%- if v.image -%}{%- assign _vbig = v.image | image_url: width: 900 -%}{%- endif -%}
+              <button class="copt copt--photo {% if forloop.first %}sel{% endif %}"
+                data-vid="{{ v.id }}"
+                data-img="{{ _vbig }}"
+                onclick="spColorClick(this,'cinturon')"
+                title="{{ _sco }}">
+                {%- if v.image -%}<img src="{{ v.image | image_url: width: 60, height: 60, crop: 'center' }}" alt="{{ _sco }}" loading="lazy">{%- endif -%}
+              </button>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+        <div class="spot__buy">
+          <div class="spot__price"><del>€27,95</del>€18,95</div>
+          <button id="sp-cinturon-buy" type="button" class="btn btn--primary btn--lg" onclick="spBuy('cinturon')">Comprar ahora 🐾</button>
+        </div>
       </div>
     </div>
   </div>
@@ -300,6 +365,82 @@ function buyNow(handle, el){
       if(btn){ btn.textContent = 'Comprar ahora 🐾'; btn.disabled = false; }
       window.location.href = '/collections/all';
     });
+}
+
+/* ===== Spotlight: color/talla → foto grande + variante + comprar ===== */
+var _sp = {
+  scooper:  { vid: null },
+  correa:   { col: null, sz: '3m', vid: null, variants: [] },
+  cinturon: { vid: null }
+};
+
+(function initSpotlights(){
+  /* Scooper: vid del primer swatch seleccionado */
+  var s = document.querySelector('#scooper .copt--photo.sel[data-vid]');
+  if (s) _sp.scooper.vid = s.dataset.vid;
+
+  /* Correa: parsear JSON + init color + calcular variante */
+  var cd = document.getElementById('sp-correa-data');
+  if (cd) {
+    try { _sp.correa.variants = JSON.parse(cd.textContent); } catch(e){}
+    var fc = document.querySelector('#correa .copt--photo.sel[data-col]');
+    if (fc) _sp.correa.col = fc.dataset.col;
+    _spCorreaSync();
+  }
+
+  /* Cinturón: vid del primer swatch seleccionado */
+  var c = document.querySelector('#cinturon .copt--photo.sel[data-vid]');
+  if (c) _sp.cinturon.vid = c.dataset.vid;
+})();
+
+function _spCorreaSync(){
+  var v = _sp.correa.variants.find(function(x){
+    return x.col === _sp.correa.col && x.sz === _sp.correa.sz;
+  });
+  if (v) {
+    _sp.correa.vid = v.id;
+    var img = document.getElementById('sp-correa-img');
+    if (img && v.img) img.src = v.img;
+  }
+}
+
+function spColorClick(btn, spotId){
+  /* Visual: marcar seleccionado en este colorrow */
+  btn.closest('.colorrow').querySelectorAll('.copt--photo').forEach(function(b){ b.classList.remove('sel'); });
+  btn.classList.add('sel');
+
+  if (spotId === 'correa') {
+    _sp.correa.col = btn.dataset.col;
+    _spCorreaSync();
+  } else {
+    _sp[spotId].vid = btn.dataset.vid;
+    var img = document.getElementById('sp-' + spotId + '-img');
+    if (img && btn.dataset.img) img.src = btn.dataset.img;
+  }
+}
+
+function spSzClick(btn){
+  btn.closest('.colorrow').querySelectorAll('.copt--sz').forEach(function(b){ b.classList.remove('sel'); });
+  btn.classList.add('sel');
+  _sp.correa.sz = btn.dataset.sz;
+  _spCorreaSync();
+}
+
+function spBuy(spotId){
+  var vid = _sp[spotId].vid;
+  if (!vid) return;
+  var btn = document.getElementById('sp-' + spotId + '-buy');
+  var orig = btn ? btn.textContent : '';
+  if (btn){ btn.textContent = 'Procesando...'; btn.disabled = true; }
+  fetch('/cart/add.js',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({id:parseInt(vid),quantity:1})
+  })
+  .then(function(){ window.location.href = '/cart'; })
+  .catch(function(){
+    if (btn){ btn.textContent = orig; btn.disabled = false; }
+  });
 }
 
 function toggleSoporte(e){
