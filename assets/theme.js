@@ -110,6 +110,45 @@
       });
     });
 
+    /* ===== Option selectors (color swatches + size buttons) ===== */
+    var variantIdInput = root.querySelector('[data-variant-id]');
+    var selectedOpts = current ? current.title.split(' / ') : [];
+
+    /* Initialise active states */
+    selectedOpts.forEach(function (val, idx) {
+      root.querySelectorAll('[data-opt-idx="' + idx + '"]').forEach(function (b) {
+        b.classList.toggle('is-active', b.getAttribute('data-opt-val') === val);
+      });
+    });
+
+    root.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-opt-val][data-opt-idx]');
+      if (!btn) return;
+      e.stopPropagation();
+      var optIdx = parseInt(btn.getAttribute('data-opt-idx'), 10);
+      var val = btn.getAttribute('data-opt-val');
+      selectedOpts[optIdx] = val;
+
+      /* Update label */
+      var lbl = root.querySelector('[data-opt-selected="' + optIdx + '"]');
+      if (lbl) lbl.textContent = val;
+
+      /* Mark active */
+      root.querySelectorAll('[data-opt-idx="' + optIdx + '"]').forEach(function (b) {
+        b.classList.toggle('is-active', b.getAttribute('data-opt-val') === val);
+      });
+
+      /* Find matching variant */
+      var matched = variantsData.find(function (v) {
+        var parts = v.title.split(' / ');
+        return selectedOpts.every(function (o, i) { return parts[i] === o; });
+      });
+      if (matched) {
+        if (variantIdInput) variantIdInput.value = matched.id;
+        selectVariant(matched);
+      }
+    });
+
     /* Quantity stepper */
     root.querySelectorAll('[data-qty]').forEach(function (wrap) {
       var input = wrap.querySelector('input');

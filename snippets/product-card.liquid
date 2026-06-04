@@ -25,14 +25,22 @@
     </div>
   </a>
   <div class="card__action">
-    <div class="card__qty" data-card-qty>
-      <button type="button" data-card-minus aria-label="Menos">−</button>
-      <span data-card-num>1</span>
-      <button type="button" data-card-plus aria-label="Más">+</button>
-    </div>
-    <button type="button" class="btn btn--primary btn--block card__buy-btn"
-      data-card-buy="{{ vid }}">
-      Comprar ahora 🐾
-    </button>
+    {%- if product.variants.size > 1 -%}
+      {%- comment -%} Multi-variante: ir a ficha para elegir color/tamaño {%- endcomment -%}
+      <a href="{{ product.url }}" class="btn btn--primary btn--block">
+        Elige opciones 🐾
+      </a>
+    {%- else -%}
+      {%- comment -%} Variante única: comprar directo {%- endcomment -%}
+      <div class="card__qty" data-card-qty>
+        <button type="button" data-card-minus aria-label="Menos">−</button>
+        <span data-card-num>1</span>
+        <button type="button" data-card-plus aria-label="Más">+</button>
+      </div>
+      <button type="button" class="btn btn--primary btn--block"
+        data-card-buy="{{ vid }}">
+        Comprar ahora 🐾
+      </button>
+    {%- endif -%}
   </div>
 </div>

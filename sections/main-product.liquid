@@ -42,56 +42,62 @@
       {% form 'product', product %}
         {%- assign current = product.selected_or_first_available_variant -%}
 
-        {%- comment -%} ===== Variant radio cards ===== {%- endcomment -%}
+        {%- comment -%} ===== Option selectors (color swatches + size buttons) ===== {%- endcomment -%}
         {%- if product.variants.size > 1 -%}
-          <div class="variant-list">
-            {%- for variant in product.variants -%}
-              {%- comment -%} derive a swatch color from the variant/option name {%- endcomment -%}
-              {%- assign vname = variant.title | downcase -%}
-              {%- assign swatch = '' -%}
-              {%- if vname contains 'roj' or vname contains 'red' %}{% assign swatch = '#D0342C' %}
-              {%- elsif vname contains 'verd' or vname contains 'green' %}{% assign swatch = '#3E8E5A' %}
-              {%- elsif vname contains 'azul' or vname contains 'blue' %}{% assign swatch = '#2A6FB0' %}
-              {%- elsif vname contains 'gris' or vname contains 'gray' or vname contains 'grey' %}{% assign swatch = '#9A9A9A' %}
-              {%- elsif vname contains 'negr' or vname contains 'black' %}{% assign swatch = '#2A1B12' %}
-              {%- elsif vname contains 'blanc' or vname contains 'white' %}{% assign swatch = '#F2EDE3' %}
-              {%- elsif vname contains 'rosa' or vname contains 'pink' %}{% assign swatch = '#E58CA8' %}
-              {%- elsif vname contains 'amarill' or vname contains 'yellow' %}{% assign swatch = '#F0A500' %}
-              {%- elsif vname contains 'morad' or vname contains 'purpura' or vname contains 'purple' %}{% assign swatch = '#7A4FB0' %}
-              {%- elsif vname contains 'naranj' or vname contains 'orange' %}{% assign swatch = '#E8702A' %}
-              {%- else %}{% assign swatch = '#C9B79C' %}{% endif -%}
-              <label class="variant-card {% if variant.id == current.id %}is-active{% endif %} {% unless variant.available %}sold-out{% endunless %}">
-                {%- if forloop.index == section.settings.popular_index -%}
-                  <span class="variant-card__flag">★ Más popular</span>
-                {%- endif -%}
-                <input type="radio" name="id" value="{{ variant.id }}" data-variant-radio {% if variant.id == current.id %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
-                <span class="dot"></span>
-                <span class="variant-swatch" style="background:{{ swatch }}"></span>
-                <span class="variant-card__main">
-                  <span class="variant-card__name">{{ variant.title }}</span>
-                  <span class="variant-card__sub">
-                    {%- if variant.available -%}
-                      {%- if variant.inventory_management and variant.inventory_quantity > 0 and variant.inventory_quantity <= 5 -%}
-                        <span class="variant-card__stock low">● Quedan {{ variant.inventory_quantity }}</span>
-                      {%- else -%}
-                        <span class="variant-card__stock">● En stock</span>
+          <div class="opts-selector">
+            {%- for option in product.options -%}
+              {%- assign opt_idx = forloop.index0 -%}
+              {%- assign selected_val = current.options[opt_idx] -%}
+              {%- assign opt_lower = option.name | downcase -%}
+              <div class="opt-group">
+                <div class="opt-label">
+                  {{ option.name }}:&nbsp;<strong data-opt-selected="{{ opt_idx }}">{{ selected_val }}</strong>
+                </div>
+                {%- if opt_lower == 'color' -%}
+                  <div class="opt-swatches">
+                    {%- for val in option.values -%}
+                      {%- assign vl = val | downcase -%}
+                      {%- assign sw = '#C9B79C' -%}
+                      {%- if vl == 'azul' %}{% assign sw = '#2A6FB0' %}
+                      {%- elsif vl == 'azul grisáceo' or vl == 'azul grisaceo' %}{% assign sw = '#6B8FC7' %}
+                      {%- elsif vl == 'verde' %}{% assign sw = '#3E8E5A' %}
+                      {%- elsif vl == 'rosa' %}{% assign sw = '#E58CA8' %}
+                      {%- elsif vl == 'rosa grisáceo' or vl == 'rosa grisaceo' %}{% assign sw = '#C4A0A8' %}
+                      {%- elsif vl == 'rojo' %}{% assign sw = '#D0342C' %}
+                      {%- elsif vl == 'rojo grisáceo' or vl == 'rojo grisaceo' %}{% assign sw = '#C4706B' %}
+                      {%- elsif vl == 'blanco' %}{% assign sw = '#F0EAD6' %}
+                      {%- elsif vl == 'marrón' or vl == 'marron' %}{% assign sw = '#8B5E3C' %}
+                      {%- elsif vl == 'negro' or vl == 'negro grisáceo' or vl == 'negro grisaceo' %}{% assign sw = '#2A2A2A' %}
+                      {%- elsif vl == 'naranja' %}{% assign sw = '#E8702A' %}
+                      {%- elsif vl == 'amarillo' %}{% assign sw = '#F0A500' %}
+                      {%- elsif vl == 'azul cielo' %}{% assign sw = '#5BAFD6' %}
+                      {%- elsif vl == 'morado' or vl contains 'purpura' %}{% assign sw = '#7A4FB0' %}
                       {%- endif -%}
-                    {%- else -%}
-                      <span class="variant-card__stock low">● Agotado</span>
-                    {%- endif -%}
-                  </span>
-                </span>
-                <span class="variant-card__right">
-                  <span class="variant-card__price">{{ variant.price | money }}</span>
-                  {%- if variant.compare_at_price > variant.price -%}
-                    <span class="variant-card__compare">{{ variant.compare_at_price | money }}</span>
-                    {%- assign off = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
-                    <span class="variant-card__off">−{{ off }}%</span>
-                  {%- endif -%}
-                </span>
-              </label>
+                      <button type="button"
+                        class="opt-swatch {% if val == selected_val %}is-active{% endif %}"
+                        data-opt-val="{{ val }}"
+                        data-opt-idx="{{ opt_idx }}"
+                        style="background:{{ sw }}"
+                        title="{{ val }}">
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                {%- else -%}
+                  <div class="opt-btns">
+                    {%- for val in option.values -%}
+                      <button type="button"
+                        class="opt-btn {% if val == selected_val %}is-active{% endif %}"
+                        data-opt-val="{{ val }}"
+                        data-opt-idx="{{ opt_idx }}">
+                        {{ val }}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </div>
             {%- endfor -%}
           </div>
+          <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
         {%- else -%}
           <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
         {%- endif -%}
