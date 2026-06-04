@@ -130,7 +130,24 @@
           <li><span class="fi">♻️</span> Dispensador de bolsas + 1 rollo de regalo</li>
           <li><span class="fi">🎒</span> Mosquetón y correa: cuélgalo donde quieras</li>
         </ul>
-        <div class="colorrow"><span class="colorrow__lbl">Color</span><button class="copt sel" style="background:#3FB4B1" data-c></button><button class="copt" style="background:#E8702A" data-c></button></div>
+        {%- comment -%} Fotos de variante para el selector de color del recogedor {%- endcomment -%}
+        {%- assign _srec = all_products['dog-poop-scooper-set-claw-waste-picker-with-leash-clip-poop-bag-dispenser-led-light-portable-hygienic-cleanup-tool-for-pet-dogs'] -%}
+        <div class="colorrow">
+          <span class="colorrow__lbl">Color</span>
+          {%- assign _srec_seen = '' -%}
+          {%- for v in _srec.variants -%}
+            {%- assign _sco = v.options[0] -%}
+            {%- assign _sch = '|' | append: _sco | append: '|' -%}
+            {%- unless _srec_seen contains _sch -%}
+              {%- assign _srec_seen = _srec_seen | append: _sch -%}
+              <button class="copt copt--photo {% if forloop.first %}sel{% endif %}" data-c title="{{ _sco }}">
+                {%- if v.image -%}
+                  <img src="{{ v.image | image_url: width: 60, height: 60, crop: 'center' }}" alt="{{ _sco }}" loading="lazy">
+                {%- endif -%}
+              </button>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
         <div class="spot__buy"><div class="spot__price"><del>€29,95</del>€19,95</div><a href="/checkout" class="btn btn--primary btn--lg">Comprar ahora 🐾</a></div>
       </div>
     </div>

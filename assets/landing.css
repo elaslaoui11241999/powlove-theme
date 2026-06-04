@@ -122,6 +122,9 @@ h2{font-size:clamp(1.9rem,4vw,3rem)}
 .colorrow{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
 .colorrow__lbl{font-family:'Fredoka',sans-serif;font-weight:600;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
 .copt{width:30px;height:30px;border-radius:9px;border:2px solid var(--border);padding:0;transition:.15s}
+/* Copt con foto (bloques destacados home — no afecta fichas ni tarjetas) */
+.copt--photo{width:48px;height:48px;border-radius:10px;overflow:hidden;padding:0}
+.copt--photo img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .copt.sel,.copt:hover{border-color:var(--accent);transform:scale(1.08)}
 @media(max-width:860px){.spot{grid-template-columns:1fr;gap:30px}.spot--rev .spot__media{order:0}}
 
