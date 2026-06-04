@@ -42,39 +42,48 @@
       {% form 'product', product %}
         {%- assign current = product.selected_or_first_available_variant -%}
 
-        {%- comment -%}
-          ===== Option selectors =====
-          Enfoque fiable: product.options[oi] para nombres (siempre strings),
-          valores derivados de product.variants (funciona en cualquier versión).
-        {%- endcomment -%}
+        {%- comment -%} ===== Option selectors — v4 definitivo ===== {%- endcomment -%}
         {%- if product.variants.size > 1 -%}
-          {%- assign _opts_count = product.options.size | minus: 1 -%}
           <div class="opts-selector">
-            {%- for oi in (0.._opts_count) -%}
-              {%- assign _oname = product.options[oi] -%}
-              {%- assign _oval  = current.options[oi] -%}
-              {%- assign _olow  = _oname | downcase -%}
+            {%- for option in product.options_with_values -%}
+              {%- assign oi  = forloop.index0 -%}
+              {%- assign _ov = current.options[oi] -%}
 
-              {%- comment -%} Valores únicos de esta opción, en orden de aparición en variantes {%- endcomment -%}
-              {%- assign _uv   = '' | split: ',' -%}
-              {%- assign _seen = '' -%}
-              {%- for v in product.variants -%}
-                {%- assign _vv  = v.options[oi] -%}
-                {%- assign _chk = '__' | append: _vv | append: '__' -%}
-                {%- unless _seen contains _chk -%}
-                  {%- assign _uv   = _uv | push: _vv -%}
-                  {%- assign _seen = _seen | append: _chk -%}
-                {%- endunless -%}
-              {%- endfor -%}
+              {%- comment -%}
+                Nombre: options_with_values[i].name es lo más fiable.
+                Fallback: product.options[i] (puede ser string u objeto).
+              {%- endcomment -%}
+              {%- assign _on = option.name -%}
+              {%- if _on == blank -%}
+                {%- assign _on_raw = product.options[oi] -%}
+                {%- assign _on = _on_raw.name | default: _on_raw -%}
+              {%- endif -%}
+              {%- assign _ol = _on | downcase -%}
+
+              {%- comment -%}
+                Valores: option.values de options_with_values.
+                Fallback: extraer valores únicos de las variantes.
+              {%- endcomment -%}
+              {%- assign _vals = option.values -%}
+              {%- if _vals.size == 0 -%}
+                {%- assign _vals = '' | split: '__' -%}
+                {%- assign _vs   = '' -%}
+                {%- for v in product.variants -%}
+                  {%- assign _vv = v.options[oi] -%}
+                  {%- assign _ck = '__' | append: _vv | append: '__' -%}
+                  {%- unless _vs contains _ck -%}
+                    {%- assign _vals = _vals | push: _vv -%}
+                    {%- assign _vs   = _vs | append: _ck -%}
+                  {%- endunless -%}
+                {%- endfor -%}
+              {%- endif -%}
 
               <div class="opt-group">
-                <div class="opt-label">
-                  {{ _oname }}:&nbsp;<strong data-opt-selected="{{ oi }}">{{ _oval }}</strong>
-                </div>
+                <div class="opt-label">{{ _on }}:&nbsp;<strong data-opt-selected="{{ oi }}">{{ _ov }}</strong></div>
 
-                {%- if _olow == 'color' -%}
+                {%- if _ol == 'color' -%}
                   <div class="opt-swatches">
-                    {%- for val in _uv -%}
+                    {%- for val in _vals -%}
                       {%- assign _img = blank -%}
                       {%- assign _fc  = 0 -%}
                       {%- for v in product.variants -%}
@@ -84,7 +93,7 @@
                         {%- endif -%}
                       {%- endfor -%}
                       <button type="button"
-                        class="opt-swatch {% if val == _oval %}is-active{% endif %}"
+                        class="opt-swatch {% if val == _ov %}is-active{% endif %}"
                         data-opt-val="{{ val }}"
                         data-opt-idx="{{ oi }}"
                         title="{{ val }}">
@@ -98,9 +107,9 @@
                   </div>
                 {%- else -%}
                   <div class="opt-btns">
-                    {%- for val in _uv -%}
+                    {%- for val in _vals -%}
                       <button type="button"
-                        class="opt-btn {% if val == _oval %}is-active{% endif %}"
+                        class="opt-btn {% if val == _ov %}is-active{% endif %}"
                         data-opt-val="{{ val }}"
                         data-opt-idx="{{ oi }}">
                         {{ val }}
