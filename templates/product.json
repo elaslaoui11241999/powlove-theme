@@ -1,8 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main": { "type": "main-product" },
-    "benefits": { "type": "benefits" },
-    "testimonials": { "type": "testimonials" }
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "reviews_text": "4.9 · 214 reseñas",
+        "sold_text": "1.2k vendidos",
+        "show_viewers": true,
+        "viewers_start": 17,
+        "show_stockbar": true,
+        "stock_count": 8,
+        "show_countdown": true,
+        "offer_label": "Oferta por tiempo limitado",
+        "countdown_label": "La oferta termina en",
+        "countdown_hours": 24,
+        "show_shipbar": true,
+        "free_ship": 40,
+        "popular_index": 2,
+        "shipping_text": "<p>Procesamos tu pedido en 1-3 días laborables. Entrega estimada <strong>8-18 días hábiles</strong> con Ecoscooting y Correos. Envío gratis en pedidos +40€.</p>",
+        "returns_text": "<p>Tienes <strong>30 días</strong> para devolverlo sin preguntas. Si no estás satisfecho, te devolvemos el dinero.</p>"
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "eyebrow": "💬 Clientes reales",
+        "title": "Más de 5.000 mascotas felices",
+        "rating_text": "Valoración media 4.9/5"
+      }
+    },
+    "17806868239d44de35": {
+      "type": "apps",
+      "blocks": {
+        "wisereviews_reviews_importer_product_reviews_Yi3TDK": {
+          "type": "shopify://apps/wisereviews-reviews-importer/blocks/product-reviews/9ef986f0-166f-4cdf-8a67-c9585e8df5a9",
+          "settings": {
+            "product": "",
+            "default_type": "product_reviews"
+          }
+        }
+      },
+      "block_order": [
+        "wisereviews_reviews_importer_product_reviews_Yi3TDK"
+      ],
+      "settings": {}
+    }
   },
-  "order": ["main", "benefits", "testimonials"]
+  "order": [
+    "main",
+    "testimonials",
+    "17806868239d44de35"
+  ]
 }
