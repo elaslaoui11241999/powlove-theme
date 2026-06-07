@@ -40,12 +40,14 @@
     "17806868239d44de35": {
       "type": "apps",
       "blocks": {
-        "judge_me_reviews_cards_carousel_XUpqNc": {
+        "judge_me_reviews_cards_carousel_KhxB9W": {
           "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {
             "show_sample_reviews": true,
-            "reviews_selection": "all",
-            "products": [],
+            "reviews_selection": "product_reviews",
+            "products": [
+              "self-adhesive-cat-scratching-mat-trimmable-cat-carpet-cat-scratching-carpet-corner-wall-cat-diy-scratch-sofa-furniture-protector"
+            ],
             "star_rating": "all",
             "show_review_media": true,
             "display_order": "media_first",
@@ -73,7 +75,7 @@
         }
       },
       "block_order": [
-        "judge_me_reviews_cards_carousel_XUpqNc"
+        "judge_me_reviews_cards_carousel_KhxB9W"
       ],
       "settings": {}
     }
